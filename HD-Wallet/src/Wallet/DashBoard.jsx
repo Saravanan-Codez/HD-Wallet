@@ -1,4 +1,5 @@
 import React from 'react'
+import CollapsedView from './CollapsedView'
 
 const DashBoard = () => {
   return (
@@ -18,7 +19,7 @@ const DashBoard = () => {
           <p className="text-sm font-medium">Seed Phrase</p>
           <p className="text-xs text-zinc-500">Hidden for security</p>
         </div>
-        <button className="text-sm text-emerald-600">
+        <button className="text-sm text-emerald-600 cursor-pointer hover:underline">
           View
         </button>
       </div>
@@ -34,15 +35,9 @@ const DashBoard = () => {
             <span>▶</span>
           </button>
         </div>
-
-        <div className="border rounded-lg">
-          <button className="w-full flex justify-between items-center p-4">
-            <span className="font-medium">Wallet 2</span>
-            <span>▶</span>
-          </button>
-        </div>
       </div>
 
+      <CollapsedView/>
     </div>
   )
 }

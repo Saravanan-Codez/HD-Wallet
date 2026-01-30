@@ -1,5 +1,13 @@
  
-export default function ImportSeedModal({ setSeedPhrase, handleSubmition, makeDots, onPopClose }) {
+import { seedFromMnemonic } from '../BIP Functions/generateSeedPhrase'
+
+export default function ImportSeedModal({ 
+  setSeedPhrase,  
+  makeDots, 
+  onPopClose,
+  seedPhrase,
+  setDashBoard
+ }) {
 
   return (
     <>
@@ -21,7 +29,7 @@ export default function ImportSeedModal({ setSeedPhrase, handleSubmition, makeDo
             rows={4}
             placeholder="Enter your 12 or 24 word seed phrase"
             className="w-full p-3 text-sm bg-white rounded-md outline-none resize-none focus:ring-2 focus:ring-emerald-500"
-            value={makeDots}
+            value={makeDots(seedPhrase)}
             onChange={(e) => setSeedPhrase(e.target.value)}
           />
 
@@ -36,7 +44,11 @@ export default function ImportSeedModal({ setSeedPhrase, handleSubmition, makeDo
 
             <button
               className="px-4 py-2 rounded-md bg-emerald-500 hover:bg-emerald-600"
-              onClick={handleSubmition}
+              onClick={() => {
+                seedFromMnemonic(seedPhrase);
+                setDashBoard(true);
+                onPopClose();
+              }}
             >
               Import
             </button>
