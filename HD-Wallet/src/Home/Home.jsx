@@ -27,11 +27,11 @@ const Home = () => {
 
   return (
     <>
-
-      {
-        seedPhrase 
-          ? (
-            
+      <div className="min-h-screen flex justify-center items-start bg-zinc-100 pt-24">
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg transition-all duration-300">
+        {
+          seedPhrase ? (
+              
             <div className="p-6 space-y-6">
 
               {/* Header */}
@@ -75,54 +75,52 @@ const Home = () => {
 
             </div>
 
+          ) : (
 
-        ) : (
-          <div className="min-h-screen flex items-center justify-center bg-zinc-100">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-8">
+            <div className=" flex items-center justify-center bg-zinc-100">
+              <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-8">
 
-              {/* Title */}
-              <div className="text-center">
-                <h1 className="text-2xl font-semibold text-zinc-900">
-                  HD Wallet
-                </h1>
-                <p className="text-sm text-zinc-500 mt-1">
-                  Import or generate a wallet to continue
-                </p>
+                {/* Title */}
+                <div className="text-center">
+                  <h1 className="text-2xl font-semibold text-zinc-900">
+                    HD Wallet
+                  </h1>
+                  <p className="text-sm text-zinc-500 mt-1">
+                    Import or generate a wallet to continue
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-col gap-4">
+                  <button
+                    onClick={() => setSeedPhrasePop(true)}
+                    className="w-full py-3 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition cursor-pointer"
+                  >
+                    Import Existing Wallet
+                  </button>
+
+                  <button
+                    className="w-full py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-100 transition cursor-pointer"
+                    onClick={() => generateSeedPhrase(setSeedPhrase, setSeed)}
+                  >
+                    Generate New Wallet
+                  </button>
+                </div>
+
               </div>
-
-              {/* Actions */}
-              <div className="flex flex-col gap-4">
-                <button
-                  onClick={() => setSeedPhrasePop(true)}
-                  className="w-full py-3 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition cursor-pointer"
-                >
-                  Import Existing Wallet
-                </button>
-
-                <button
-                  className="w-full py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-100 transition cursor-pointer"
-                  onClick={() => generateSeedPhrase(setSeedPhrase, setSeed)}
-                >
-                  Generate New Wallet
-                </button>
-              </div>
-
+              {seedPhrasePop && (
+                <SeedPhrasePopUp 
+                  setSeedPhrase={setSeedPhrase} 
+                  handleSubmition={handleSeedPhraseSubmition} 
+                  makeDots={makeDots}
+                  onPopClose={() => setSeedPhrasePop(false)}
+                />
+              )}
             </div>
-            {seedPhrasePop && (
-              <SeedPhrasePopUp 
-                setSeedPhrase={setSeedPhrase} 
-                handleSubmition={handleSeedPhraseSubmition} 
-                makeDots={makeDots}
-                onPopClose={() => setSeedPhrasePop(false)}
-              />
-            )}
-          </div>
-        )
-      }
-
-      
-
-      
+          )
+        }
+        </div>
+      </div>
     </>
 
 
