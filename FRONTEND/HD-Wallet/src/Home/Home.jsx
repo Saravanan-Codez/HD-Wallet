@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { generateSeedPhrase } from '../BIP Functions/generateSeedPhrase';
 import DashBoard from '../Wallet/DashBoard';
 import DefaultPage from './DefaultPage';
@@ -11,9 +11,9 @@ const Home = () => {
   const [seed, setSeed] = useState(null);
   const [dashBoard, setDashBoard] = useState(false);
 
-  useEffect(() => {
-    document.body.style.overflow = seedPhrasePop ? "hidden" : "hidden";
-  }, [seedPhrasePop]);
+  // useEffect(() => {
+  //   document.body.style.overflow = seedPhrasePop ? "hidden" : "hidden";
+  // }, [seedPhrasePop]);
 
 
   const makeDots = (seedPhrase) => {
