@@ -4,6 +4,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 
 const DashBoard = () => {
 
@@ -13,8 +14,11 @@ const DashBoard = () => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const [mnemonicShow, setMnemonicShow] = React.useState(false);
+
   return (
     <div className="p-6 space-y-6">
+      { mnemonicShow && <MnemonicPopUp onClose={() => setMnemonicShow(false)}/> }
 
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -30,7 +34,10 @@ const DashBoard = () => {
           <p className="text-sm font-medium">Seed Phrase</p>
           <p className="text-xs text-zinc-500">Hidden for security</p>
         </div>
-        <button className="text-sm text-emerald-600 cursor-pointer hover:underline">
+        <button 
+          className="text-sm text-emerald-600 cursor-pointer hover:underline"
+          onClick={() => setMnemonicShow(true)}
+        >
           View
         </button>
       </div>
