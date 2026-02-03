@@ -63,7 +63,10 @@ const MnemonicPopUp = ({ onClose, seedPhrase }) => {
           <div className ="flex justify-between items-center pt-2">
             <button 
               className ="text-sm text-emerald-600 hover:underline"
-              onClick={() => setreveal(!reveal)}
+              onClick={() => {
+                setreveal(!reveal);
+                console.log(seedPhrase);
+              }}
             >
               Reveal phrase
             </button>
