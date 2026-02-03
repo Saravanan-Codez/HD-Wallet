@@ -1,6 +1,10 @@
 import React from 'react'
+import { useState } from 'react';
 
-const MnemonicPopUp = ({ onClose }) => {
+const MnemonicPopUp = ({ onClose, seedPhrase }) => {
+
+  const [reveal, setreveal] = useState(false);
+
   return (
     <div>
       {/* <!-- Overlay --> */}
@@ -37,27 +41,30 @@ const MnemonicPopUp = ({ onClose }) => {
           <div className ="grid grid-cols-3 gap-3">
 
             {/* <!-- Word item --> */}
-            <div className ="flex items-center gap-2 border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50">
-              <span className ="text-xs text-zinc-400 w-4">1</span>
-              <span className ="text-sm font-mono text-zinc-900">••••••</span>
-            </div>
+            {seedPhrase.split(" ").map((word, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50"
+              >
+                <span className="text-xs text-zinc-400 w-4">
+                  {index + 1}
+                </span>
 
-            <div className ="flex items-center gap-2 border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50">
-              <span className ="text-xs text-zinc-400 w-4">2</span>
-              <span className ="text-sm font-mono text-zinc-900">••••••</span>
-            </div>
-
-            <div className ="flex items-center gap-2 border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50">
-              <span className ="text-xs text-zinc-400 w-4">3</span>
-              <span className ="text-sm font-mono text-zinc-900">••••••</span>
-            </div>
+                <span className="text-sm font-mono text-zinc-900">
+                  {reveal ? word : "••••••••"}
+                </span>
+              </div>
+            ))}
 
             {/* <!-- repeat up to 12 / 24 --> */}
           </div>
 
           {/* <!-- Footer --> */}
           <div className ="flex justify-between items-center pt-2">
-            <button className ="text-sm text-emerald-600 hover:underline">
+            <button 
+              className ="text-sm text-emerald-600 hover:underline"
+              onClick={() => setreveal(!reveal)}
+            >
               Reveal phrase
             </button>
 

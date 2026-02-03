@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 
-const DashBoard = () => {
+const DashBoard = ({ seedPhrase }) => {
 
   const [expanded, setExpanded] = React.useState(false);
 
@@ -18,7 +18,12 @@ const DashBoard = () => {
 
   return (
     <div className="p-6 space-y-6">
-      { mnemonicShow && <MnemonicPopUp onClose={() => setMnemonicShow(false)}/> }
+      { mnemonicShow && 
+        <MnemonicPopUp 
+          onClose={() => setMnemonicShow(false)}
+          seedPhrase={seedPhrase}
+        /> 
+      }
 
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -53,10 +58,10 @@ const DashBoard = () => {
 
           {/* Right */}
           <div className="flex gap-2">
-            <button className="px-3 py-2 rounded bg-zinc-100">
+            <button className="px-3 py-2 rounded bg-zinc-100 cursor-pointer hover:bg-zinc-200">
               Add Wallet
             </button>
-            <button className="px-3 py-1 rounded bg-red-100 text-red-600">
+            <button className="px-3 py-1 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">
               Delete all
             </button>
           </div>
@@ -75,7 +80,7 @@ const DashBoard = () => {
           </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <div className="p-4 space-y-3 text-sm bg-white">
+            <div className="p-4 space-y-3 text-sm">
             <div>
               <p className="text-zinc-500">Derivation Path</p>
               <p className="font-mono">m/44'/501'/0'/0'</p>
@@ -92,7 +97,7 @@ const DashBoard = () => {
             </div>
 
             <div className="flex gap-3 justify-end">
-              <button className="px-3 py-2 rounded bg-red-100 text-red-600">
+              <button className="px-3 py-2 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">
                 Delete
               </button>
             </div>
