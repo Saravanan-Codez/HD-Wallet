@@ -12,6 +12,18 @@ const DashBoard = ({ seedPhrase }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [mnemonicShow, setMnemonicShow] = React.useState(false);
 
+  const [walletIndex, setWalletIndex] = React.useState(0);
+  const [wallets, setWallets] = React.useState([]);
+
+  const handleAddWallet = () => {
+    const wallet = generateWalletFromMnemonic(seedPhrase, walletIndex + 1);
+
+    setWallets(prev => [
+      ...prev, wallet
+    ]);
+    setWalletIndex(prev => prev + 1);
+  }
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -61,7 +73,7 @@ const DashBoard = ({ seedPhrase }) => {
           <div className="flex gap-2">
             <button 
               className="px-3 py-2 rounded bg-zinc-100 cursor-pointer hover:bg-zinc-200"
-              onClick={() => generateWalletFromMnemonic(seedPhrase, 1)}
+              onClick={handleAddWallet}
             >
               Add Wallet
             </button>
@@ -73,79 +85,64 @@ const DashBoard = ({ seedPhrase }) => {
 
 
         {/* Wallet Item */}
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-          <Typography component="span" sx={{ width: '33%', flexShrink: 0 }}>
-            Wallet - 1
-          </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className="p-4 space-y-3 text-sm">
-            <div>
-              <p className="text-zinc-500">Derivation Path</p>
-              <p className="font-mono">m/44'/501'/0'/0'</p>
-            </div>
+        {
+          wallets.map((wallet) => (
+            <Accordion expanded={expanded === `panel${wallet.index}`} onChange={handleChange(`panel${wallet.index}`)}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+              >
+              <Typography component="span" sx={{ width: '33%', flexShrink: 0 }}>
+                Wallet - {wallet.index}
+              </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="p-4 space-y-3 text-sm">
 
-            <div>
-              <p className="text-zinc-500">Public Key</p>
-              <p className="font-mono break-all">xxxxxxx</p>
-            </div>
+                  {/* Balance */}
+                  <div className="flex items-center justify-between bg-zinc-50 rounded-lg p-3">
+                    <p className="text-zinc-500">Balance</p>
 
-            <div>
-              <p className="text-zinc-500">Private Key</p>
-              <p className="font-mono">••••••••</p>
-            </div>
+                    <p className="font-semibold text-base">
+                      0.00 SOL
+                    </p>
+                  </div>
 
-            <div className="flex gap-3 justify-end">
-              <button className="px-3 py-2 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">
-                Delete
-              </button>
-            </div>
-          </div>
-        </AccordionDetails>
-        </Accordion>
-        <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-          <Typography component="span" sx={{ width: '33%', flexShrink: 0 }}>
-            Wallet - 2
-          </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div className="p-4 space-y-3 text-sm bg-white">
-            <div>
-              <p className="text-zinc-500">Derivation Path</p>
-              <p className="font-mono">m/44'/501'/0'/0'</p>
-            </div>
+                  {/* Derivation Path */}
+                  <div>
+                    <p className="text-zinc-500">Derivation Path</p>
+                    <p className="font-mono">{wallet.path}</p>
+                  </div>
 
-            <div>
-              <p className="text-zinc-500">Public Key</p>
-              <p className="font-mono break-all">xxxxxxx</p>
-            </div>
+                  {/* Public Key */}
+                  <div>
+                    <p className="text-zinc-500">Public Key</p>
+                    <p className="font-mono break-all">
+                      {wallet.publicKeyBase58}
+                    </p>
+                  </div>
 
-            <div>
-              <p className="text-zinc-500">Private Key</p>
-              <p className="font-mono">••••••••</p>
-            </div>
+                  {/* Private Key */}
+                  <button
+                    className="text-zinc-500 hover:underline cursor-pointer text-left"
+                  >
+                    Private Key
+                  </button>
 
-            <div className="flex gap-3 pt-2">
-              <button className="px-3 py-2 rounded bg-zinc-100">
-                Add Wallet
-              </button>
-              <button className="px-3 py-2 rounded bg-red-100 text-red-600">
-                Delete
-              </button>
-            </div>
-          </div>
-        </AccordionDetails>
-        </Accordion>
+                  {/* Actions */}
+                  <div className="flex gap-3 justify-end">
+                    <button className="px-3 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+
+            </AccordionDetails>
+            </Accordion>
+          ))
+        }
+        
       </div>
 
     </div>
