@@ -2,10 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import buffer from 'buffer';
+import { Buffer } from 'buffer';
+// import process from "process";
 
 // Polyfill for Buffer
-window.Buffer = buffer.Buffer;
+window.Buffer = Buffer;
+// window.process = process;
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

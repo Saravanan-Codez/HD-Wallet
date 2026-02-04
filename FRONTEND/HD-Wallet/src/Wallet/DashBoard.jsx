@@ -5,6 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
+import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase';
 
 const DashBoard = ({ seedPhrase }) => {
 
@@ -58,7 +59,10 @@ const DashBoard = ({ seedPhrase }) => {
 
           {/* Right */}
           <div className="flex gap-2">
-            <button className="px-3 py-2 rounded bg-zinc-100 cursor-pointer hover:bg-zinc-200">
+            <button 
+              className="px-3 py-2 rounded bg-zinc-100 cursor-pointer hover:bg-zinc-200"
+              onClick={() => generateWalletFromMnemonic(seedPhrase, 1)}
+            >
               Add Wallet
             </button>
             <button className="px-3 py-1 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">

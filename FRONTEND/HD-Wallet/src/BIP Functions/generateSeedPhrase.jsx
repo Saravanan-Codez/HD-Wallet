@@ -1,7 +1,9 @@
 import { mnemonicToSeedSync, validateMnemonic, generateMnemonic } from "bip39";
-import * as ed from "@noble/ed25519";
-import { derivePath } from "ed25519-hd-key";
-import { Buffer } from "buffer";
+import { HDKey } from "micro-ed25519-hdkey";
+import { Keypair } from "@solana/web3.js";
+import nacl from "tweetnacl";
+import bs58 from "bs58";
+
 
 function generateSeedPhrase(setSeedPhrase, setSeed) {
   const newSeedPhrase = generateMnemonic(128);
@@ -14,30 +16,47 @@ function seedFromMnemonic(mnemonic, setSeed) {
   setSeed(seed);
 }
 
-function generateWalletFromMnemonic(index, mnemonic) {
+function generateWalletFromMnemonic(mnemonic, index) {
   if (!validateMnemonic(mnemonic)) {
-    throw new Error("Invalid mnemonic");
+    throw new Error("Invalid mnemonic phrase");
+  }
+
+  if (index < 0) {
+    throw new Error("Invalid wallet index");
   }
 
   const seed = mnemonicToSeedSync(mnemonic);
-  const seedHex = Buffer.from(seed).toString("hex");
+
+  const hd = HDKey.fromMasterSeed(seed);
 
   const path = `m/44'/501'/${index}'/0'`;
-  const { key: privateKey } = derivePath(path, seedHex);
 
-  const publicKey = ed.getPublicKey(privateKey);
+  const child = hd.derive(path);
 
-  // cleanup
-  seed.fill(0);
+  const derivedPrivateKey = child.privateKey;
 
+  const naclKeypair = nacl.sign.keyPair.fromSeed(derivedPrivateKey);
+
+  const solanaKeypair = Keypair.fromSecretKey(
+    naclKeypair.secretKey
+  );
+
+  const publicKeyBase58 = solanaKeypair.publicKey.toBase58();
+  const privateKeyBase58 = bs58.encode(solanaKeypair.secretKey);
+
+  console.log("child ->", child);
+  console.log("derivedPrivateKey ->", derivedPrivateKey);
+  console.log("naclKeypair -> ", naclKeypair);
+  console.log("publicKeyBase58 -> ", solanaKeypair.publicKey.toBase58());
+  
+  
   return {
     index,
     path,
-    privateKey, // ⚠️ do NOT expose in UI
-    publicKey
+    publicKeyBase58,
+    privateKeyBase58
   };
 }
-
 export { 
   generateSeedPhrase, 
   seedFromMnemonic, 
