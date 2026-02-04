@@ -9,12 +9,12 @@ import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 const DashBoard = ({ seedPhrase }) => {
 
   const [expanded, setExpanded] = React.useState(false);
+  const [mnemonicShow, setMnemonicShow] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const [mnemonicShow, setMnemonicShow] = React.useState(false);
 
   return (
     <div className="p-6 space-y-6">

@@ -57,6 +57,16 @@ const getKeyPair = async (req, res) => {
   }
 };
 
+const derivePath = async (req, res) => {
+  try {
+
+    
+
+  } catch(error) {
+
+  }
+}
+
 module.exports = {
     getKeyPair,
     healthCheck
