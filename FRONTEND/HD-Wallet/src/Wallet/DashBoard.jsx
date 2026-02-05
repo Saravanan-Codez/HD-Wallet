@@ -1,23 +1,26 @@
 import * as React from 'react';
 import { useState, useMemo } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase';
+import AccordionWallet from './Accordian';
 
 const DashBoard = ({ seedPhrase }) => {
 
   const [expanded, setExpanded] = useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+
+  
   const [mnemonicShow, setMnemonicShow] = useState(false);
 
   const [wallets, setWallets] = useState([]);
 
   const handleAddWallet = () => {
     setWallets(prev => {
-      const wallet = generateWalletFromMnemonic(seedPhrase, prev.length);
+      const wallet = generateWalletFromMnemonic(seedPhrase, prev.length + 1);
       return [...prev, wallet];
     });
   };
@@ -27,184 +30,80 @@ const DashBoard = ({ seedPhrase }) => {
   return generateWalletFromMnemonic(seedPhrase, 0);
 }, [seedPhrase]);
 
-
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-
-
   return (
-    <div className="p-6 space-y-6">
-      { mnemonicShow && 
-        <MnemonicPopUp 
-          onClose={() => setMnemonicShow(false)}
-          seedPhrase={seedPhrase}
-        /> 
-      }
+    <div className="h-screen overflow-hidden bg-zinc-100 flex justify-center">
+      <div className="w-full max-w-xl h-full">
+        <div className="p-6 h-full flex flex-col gap-6">
 
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">HD Wallet</h1>
-        <span className="text-xs text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
-          Active
-        </span>
-      </div>
+          {/* Mnemonic Popup */}
+          {mnemonicShow && (
+            <MnemonicPopUp
+              onClose={() => setMnemonicShow(false)}
+              seedPhrase={seedPhrase}
+            />
+          )}
 
-      {/* Seed Section */}
-      <div className="bg-zinc-50 rounded-lg p-4 flex justify-between items-center">
-        <div>
-          <p className="text-sm font-medium">Seed Phrase</p>
-          <p className="text-xs text-zinc-500">Hidden for security</p>
-        </div>
-        <button 
-          className="text-sm text-emerald-600 cursor-pointer hover:underline"
-          onClick={() => setMnemonicShow(true)}
-        >
-          View
-        </button>
-      </div>
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-semibold">HD Wallet</h1>
+            <span className="text-xs text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
+              Active
+            </span>
+          </div>
 
-      {/* Wallets */}
-      <div className="space-y-3">
-        
-        <div className="flex items-center justify-between">
-          {/* Left */}
-          <p className="text-sm font-medium text-zinc-700">
-            Wallets
-          </p>
-
-          {/* Right */}
-          <div className="flex gap-2">
-            <button 
-              className="px-3 py-2 rounded bg-zinc-100 cursor-pointer hover:bg-zinc-200"
-              onClick={handleAddWallet}
+          {/* Seed Section */}
+          <div className="bg-zinc-50 rounded-lg p-4 flex justify-between items-center">
+            <div>
+              <p className="text-sm font-medium">Seed Phrase</p>
+              <p className="text-xs text-zinc-500">Hidden for security</p>
+            </div>
+            <button
+              className="text-sm text-emerald-600 cursor-pointer hover:underline"
+              onClick={() => setMnemonicShow(true)}
             >
-              Add Wallet
-            </button>
-            <button className="px-3 py-1 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">
-              Delete all
+              View
             </button>
           </div>
+
+          {/* Wallets */}
+          <div className="flex-1 overflow-y-auto no-scrollbar space-y-3">
+
+            {/* Wallets Header */}
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-zinc-700">Wallets</p>
+              <div className="flex gap-2">
+                <button
+                  className="px-3 py-2 rounded bg-zinc-100 cursor-pointer hover:bg-zinc-200"
+                  onClick={handleAddWallet}
+                >
+                  Add Wallet
+                </button>
+                <button className="px-3 py-1 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">
+                  Delete all
+                </button>
+              </div>
+            </div>
+
+            {/* First Wallet */}
+            {wallet0 && (
+              <AccordionWallet 
+                wallet={wallet0}
+                expanded={expanded}
+                onChange={handleChange}
+              />
+            )}
+
+            {/* Wallet List */}
+            {wallets.map((wallet) => (
+              <AccordionWallet 
+                wallet={wallet}
+                expanded={expanded}
+                onChange={handleChange}
+              />
+            ))}
+          </div>
         </div>
-
-        {
-          wallet0 && 
-            <Accordion key={wallet0.index} expanded={expanded === `panel${wallet0.index}`} onChange={handleChange(`panel${wallet0.index}`)}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-              <Typography component="span" sx={{ width: '33%', flexShrink: 0 }}>
-                Wallet - {wallet0.index}
-              </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="p-4 space-y-3 text-sm">
-
-                  {/* Balance */}
-                  <div className="flex items-center justify-between bg-zinc-50 rounded-lg p-3">
-                    <p className="text-zinc-500">Balance</p>
-
-                    <p className="font-semibold text-base">
-                      0.00 SOL
-                    </p>
-                  </div>
-
-                  {/* Derivation Path */}
-                  <div>
-                    <p className="text-zinc-500">Derivation Path</p>
-                    <p className="font-mono">{wallet0.path}</p>
-                  </div>
-
-                  {/* Public Key */}
-                  <div>
-                    <p className="text-zinc-500">Public Key</p>
-                    <p className="font-mono break-all">
-                      {wallet0.publicKeyBase58}
-                    </p>
-                  </div>
-
-                  {/* Private Key */}
-                  <button
-                    className="text-zinc-500 hover:underline cursor-pointer text-left"
-                  >
-                    Private Key
-                  </button>
-
-                  {/* Actions */}
-                  <div className="flex gap-3 justify-end">
-                    <button className="px-3 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200">
-                      Delete
-                    </button>
-                  </div>
-                </div>
-
-            </AccordionDetails>
-            </Accordion>
-        }
-
-        {/* Wallet Item */}
-        {
-          wallets.map((wallet) => (
-            <Accordion key={wallet.index} expanded={expanded === `panel${wallet.index}`} onChange={handleChange(`panel${wallet.index}`)}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-              >
-              <Typography component="span" sx={{ width: '33%', flexShrink: 0 }}>
-                Wallet - {wallet.index}
-              </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div className="p-4 space-y-3 text-sm">
-
-                  {/* Balance */}
-                  <div className="flex items-center justify-between bg-zinc-50 rounded-lg p-3">
-                    <p className="text-zinc-500">Balance</p>
-
-                    <p className="font-semibold text-base">
-                      0.00 SOL
-                    </p>
-                  </div>
-
-                  {/* Derivation Path */}
-                  <div>
-                    <p className="text-zinc-500">Derivation Path</p>
-                    <p className="font-mono">{wallet.path}</p>
-                  </div>
-
-                  {/* Public Key */}
-                  <div>
-                    <p className="text-zinc-500">Public Key</p>
-                    <p className="font-mono break-all">
-                      {wallet.publicKeyBase58}
-                    </p>
-                  </div>
-
-                  {/* Private Key */}
-                  <button
-                    className="text-zinc-500 hover:underline cursor-pointer text-left"
-                  >
-                    Private Key
-                  </button>
-
-                  {/* Actions */}
-                  <div className="flex gap-3 justify-end">
-                    <button className="px-3 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200">
-                      Delete
-                    </button>
-                  </div>
-                </div>
-
-            </AccordionDetails>
-            </Accordion>
-          ))
-        }
-        
       </div>
-
     </div>
   )
 }
