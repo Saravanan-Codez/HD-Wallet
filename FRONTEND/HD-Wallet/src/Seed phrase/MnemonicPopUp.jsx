@@ -1,7 +1,17 @@
 import React from 'react'
 import { useState } from 'react';
+import Snackbar from '@mui/material/Snackbar'
+import copyLogo from '../assets/copy.png'
 
-const MnemonicPopUp = ({ onClose, seedPhrase }) => {
+
+const MnemonicPopUp = (
+  { 
+    onClose,
+    seedPhrase, 
+    openSnackBar, 
+    onCloseSnackBar, 
+    handleClickSnackBar 
+  }) => {
 
   const [reveal, setreveal] = useState(false);
 
@@ -36,6 +46,26 @@ const MnemonicPopUp = ({ onClose, seedPhrase }) => {
           <div className ="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
             Anyone with this recovery phrase can fully control your wallet.
           </div>
+          
+          {
+            reveal && (
+              <div className="flex justify-end ">
+                <button
+                  
+                  onClick={() => {
+                    navigator.clipboard.writeText(seedPhrase);
+                    handleClickSnackBar();
+                  }}
+                  className="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-700 cursor-pointer"
+                >
+                  <img className="w-4 h-4" src={copyLogo}></img>
+                  <p>Copy</p>
+                </button>
+              </div>
+            )
+          }
+          
+
 
           {/* <!-- Seed Phrase Grid (12 words example) --> */}
           <div className ="grid grid-cols-3 gap-3">
@@ -70,7 +100,6 @@ const MnemonicPopUp = ({ onClose, seedPhrase }) => {
             >
               Reveal phrase
             </button>
-
             <button 
               className ="px-4 py-2 rounded-lg bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
               onClick={onClose}
@@ -81,6 +110,17 @@ const MnemonicPopUp = ({ onClose, seedPhrase }) => {
 
         </div>
       </div>
+
+      {
+        openSnackBar && (
+          <Snackbar
+            open={openSnackBar}
+            autoHideDuration={2000}
+            onClose={onCloseSnackBar}
+            message="Seed phrase copied to clipboard"
+          />
+        )
+      }
 
     </div>
   )

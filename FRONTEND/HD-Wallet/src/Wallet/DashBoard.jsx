@@ -4,34 +4,55 @@ import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase';
 import AccordionWallet from './Accordian';
 
+
 const DashBoard = ({ seedPhrase }) => {
 
+  const [openSnackBar, setOpenSnackBar] = React.useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [mnemonicShow, setMnemonicShow] = useState(false);
+  const [lastDerivedIndex, setLastDerivedIndex] = useState(0);
+  const [wallets, setWallets] = useState([]);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  const handleClickSnackBar = () => {
+    setOpenSnackBar(true);
+  };
 
-  
-  const [mnemonicShow, setMnemonicShow] = useState(false);
-
-  const [wallets, setWallets] = useState([]);
+  const handleCloseSnackBar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackBar(false);
+  };
 
   const handleAddWallet = () => {
-    setWallets(prev => {
-      const wallet = generateWalletFromMnemonic(seedPhrase, prev.length + 1);
-      return [...prev, wallet];
-    });
+    const nextIndex = lastDerivedIndex + 1;
+
+    setLastDerivedIndex(nextIndex);
+
+    setWallets(prev => [
+      ...prev,
+      generateWalletFromMnemonic(seedPhrase, nextIndex),
+    ]);
   };
 
   const wallet0 = useMemo(() => {
-  if (!seedPhrase) return null;
-  return generateWalletFromMnemonic(seedPhrase, 0);
-}, [seedPhrase]);
+    if (!seedPhrase) return null;
+    return generateWalletFromMnemonic(seedPhrase, 0);
+  }, [seedPhrase]);
 
+  const handleDelete = (index) => {
+    const newWallets = wallets.filter((wallet) => wallet.index !== index);
+    setWallets(newWallets);
+  }
+ 
   return (
-    <div className="h-screen overflow-hidden bg-zinc-100 flex justify-center">
+    <div 
+      className="h-screen overflow-hidden no-scrollbar flex justify-center"
+    >
       <div className="w-full max-w-xl h-full">
         <div className="p-6 h-full flex flex-col gap-6">
 
@@ -40,6 +61,9 @@ const DashBoard = ({ seedPhrase }) => {
             <MnemonicPopUp
               onClose={() => setMnemonicShow(false)}
               seedPhrase={seedPhrase}
+              openSnackBar={openSnackBar}
+              onCloseSnackBar={handleCloseSnackBar}
+              handleClickSnackBar={handleClickSnackBar}
             />
           )}
 
@@ -78,7 +102,13 @@ const DashBoard = ({ seedPhrase }) => {
                 >
                   Add Wallet
                 </button>
-                <button className="px-3 py-1 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200">
+                <button 
+                  className="px-3 py-1 rounded bg-red-100 text-red-600 cursor-pointer hover:bg-red-200"
+                  onClick={() => {
+                    setWallets([])
+                    setLastDerivedIndex(0)
+                  }}  
+                >
                   Delete all
                 </button>
               </div>
@@ -90,6 +120,10 @@ const DashBoard = ({ seedPhrase }) => {
                 wallet={wallet0}
                 expanded={expanded}
                 onChange={handleChange}
+                openSnackBar={openSnackBar}
+                onCloseSnackBar={handleCloseSnackBar}
+                handleClickSnackBar={handleClickSnackBar}
+                handleDelete={handleDelete}
               />
             )}
 
@@ -99,6 +133,10 @@ const DashBoard = ({ seedPhrase }) => {
                 wallet={wallet}
                 expanded={expanded}
                 onChange={handleChange}
+                openSnackBar={openSnackBar}
+                onCloseSnackBar={handleCloseSnackBar}
+                handleClickSnackBar={handleClickSnackBar}
+                handleDelete={handleDelete}
               />
             ))}
           </div>
