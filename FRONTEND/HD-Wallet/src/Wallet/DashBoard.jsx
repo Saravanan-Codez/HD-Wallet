@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useMemo } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -9,20 +10,23 @@ import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase'
 
 const DashBoard = ({ seedPhrase }) => {
 
-  const [expanded, setExpanded] = React.useState(false);
-  const [mnemonicShow, setMnemonicShow] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [mnemonicShow, setMnemonicShow] = useState(false);
 
-  const [walletIndex, setWalletIndex] = React.useState(0);
-  const [wallets, setWallets] = React.useState([]);
+  const [wallets, setWallets] = useState([]);
 
   const handleAddWallet = () => {
-    const wallet = generateWalletFromMnemonic(seedPhrase, walletIndex + 1);
+    setWallets(prev => {
+      const wallet = generateWalletFromMnemonic(seedPhrase, prev.length);
+      return [...prev, wallet];
+    });
+  };
 
-    setWallets(prev => [
-      ...prev, wallet
-    ]);
-    setWalletIndex(prev => prev + 1);
-  }
+  const wallet0 = useMemo(() => {
+  if (!seedPhrase) return null;
+  return generateWalletFromMnemonic(seedPhrase, 0);
+}, [seedPhrase]);
+
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -83,11 +87,67 @@ const DashBoard = ({ seedPhrase }) => {
           </div>
         </div>
 
+        {
+          wallet0 && 
+            <Accordion key={wallet0.index} expanded={expanded === `panel${wallet0.index}`} onChange={handleChange(`panel${wallet0.index}`)}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+              >
+              <Typography component="span" sx={{ width: '33%', flexShrink: 0 }}>
+                Wallet - {wallet0.index}
+              </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className="p-4 space-y-3 text-sm">
+
+                  {/* Balance */}
+                  <div className="flex items-center justify-between bg-zinc-50 rounded-lg p-3">
+                    <p className="text-zinc-500">Balance</p>
+
+                    <p className="font-semibold text-base">
+                      0.00 SOL
+                    </p>
+                  </div>
+
+                  {/* Derivation Path */}
+                  <div>
+                    <p className="text-zinc-500">Derivation Path</p>
+                    <p className="font-mono">{wallet0.path}</p>
+                  </div>
+
+                  {/* Public Key */}
+                  <div>
+                    <p className="text-zinc-500">Public Key</p>
+                    <p className="font-mono break-all">
+                      {wallet0.publicKeyBase58}
+                    </p>
+                  </div>
+
+                  {/* Private Key */}
+                  <button
+                    className="text-zinc-500 hover:underline cursor-pointer text-left"
+                  >
+                    Private Key
+                  </button>
+
+                  {/* Actions */}
+                  <div className="flex gap-3 justify-end">
+                    <button className="px-3 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+
+            </AccordionDetails>
+            </Accordion>
+        }
 
         {/* Wallet Item */}
         {
           wallets.map((wallet) => (
-            <Accordion expanded={expanded === `panel${wallet.index}`} onChange={handleChange(`panel${wallet.index}`)}>
+            <Accordion key={wallet.index} expanded={expanded === `panel${wallet.index}`} onChange={handleChange(`panel${wallet.index}`)}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
