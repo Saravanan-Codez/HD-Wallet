@@ -98,7 +98,7 @@ const MnemonicPopUp = (
                 console.log(seedPhrase);
               }}
             >
-              Reveal phrase
+              { reveal ? "Hide phrase" : "Reveal phrase" }
             </button>
             <button 
               className ="px-4 py-2 rounded-lg bg-zinc-100 text-zinc-700 hover:bg-zinc-200"

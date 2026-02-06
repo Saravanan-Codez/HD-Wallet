@@ -29,19 +29,19 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen flex justify-center items-start bg-zinc-100 pt-24">
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg transition-all duration-300">
-        {
-          dashBoard ? (
-              
-            <DashBoard 
-              seedPhrase={seedPhrase}
-              seed={seed}
-            />
-
-          ) : (
-
-            <DefaultPage 
+      {dashBoard ? (
+        // ✅ Dashboard layout (app-style)
+        <div className="min-h-screen bg-zinc-50">
+          <DashBoard
+            seedPhrase={seedPhrase}
+            seed={seed}
+          />
+        </div>
+      ) : (
+        // ✅ Default page layout (card-style)
+        <div className="min-h-screen flex justify-center items-start bg-zinc-100 pt-24">
+          <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg transition-all duration-300">
+            <DefaultPage
               onPopOpen={() => setSeedPhrasePop(true)}
               newSeedPhrase={() => generateSeedPhrase(setSeedPhrase, setSeed)}
               seedPhrasePop={seedPhrasePop}
@@ -51,14 +51,10 @@ const Home = () => {
               seedPhrase={seedPhrase}
               setDashBoard={setDashBoard}
             />
-            
-          )
-        }
+          </div>
         </div>
-      </div>
+      )}
     </>
-
-
   )
 }
 

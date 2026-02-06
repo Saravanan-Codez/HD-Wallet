@@ -14,10 +14,10 @@ const DefaultPage = ({
   return (
     <>
       {/* APP SHELL */}
-      <div className="fixed inset-0 bg-zinc-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-linear-to-br from-zinc-50 to-zinc-100 flex items-center justify-center">
 
         {/* CARD */}
-        <div className="w-full max-w-sm bg-white rounded-2xl shadow-md p-8">
+        <div className="w-full max-w-sm bg-white rounded-2xl border shadow-sm p-8">
 
           {/* HEADER */}
           <div className="text-center mb-8">
@@ -25,34 +25,42 @@ const DefaultPage = ({
               HD Wallet
             </h1>
             <p className="text-sm text-zinc-500 mt-1">
-              Import or generate a wallet to continue
+              Securely create or import a wallet to continue
             </p>
           </div>
 
           {/* ACTIONS */}
           <div className="flex flex-col gap-4">
-            <button
-              onClick={onPopOpen}
-              className="w-full py-3 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition"
-            >
-              Import Existing Wallet
-            </button>
 
+            {/* Primary */}
             <button
               onClick={() => {
-                newSeedPhrase()
-                setDashBoard(true)
+                newSeedPhrase();
+                setDashBoard(true);
               }}
-              className="w-full py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-100 transition"
+              className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition"
             >
               Generate New Wallet
             </button>
+
+            {/* Secondary */}
+            <button
+              onClick={onPopOpen}
+              className="w-full py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-50 transition"
+            >
+              Import Existing Wallet
+            </button>
           </div>
+
+          {/* FOOTER NOTE */}
+          <p className="text-xs text-zinc-400 text-center mt-6">
+            Your keys are generated and stored locally.
+          </p>
 
         </div>
       </div>
 
-      {/* MODAL (ROOT LEVEL) */}
+      {/* MODAL */}
       {seedPhrasePop && (
         <SeedPhrasePopUp
           setSeedPhrase={setSeedPhrase}
@@ -63,8 +71,6 @@ const DefaultPage = ({
         />
       )}
     </>
-
-
   )
 }
 
