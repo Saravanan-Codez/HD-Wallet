@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase';
 import AccordionWallet from './Accordian';
+import PrivateKeyCard from './PrivateKeyCard';
 
 
 const DashBoard = ({ seedPhrase }) => {
@@ -12,6 +13,8 @@ const DashBoard = ({ seedPhrase }) => {
   const [mnemonicShow, setMnemonicShow] = useState(false);
   const [lastDerivedIndex, setLastDerivedIndex] = useState(0);
   const [wallets, setWallets] = useState([]);
+  const [privateKeyCard, setPrivateKeyCard] = useState(false);
+  const [activeWallet, setActiveWallet] = useState(null);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -94,50 +97,13 @@ const DashBoard = ({ seedPhrase }) => {
             </div>
             
             {/* Private Key Card */}
-            <div className="bg-white rounded-xl border p-5 space-y-4">
-
-              {/* Header */}
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-zinc-900">
-                  Private Key
-                </p>
-                <span className="text-xs text-zinc-400">
-                  Sensitive
-                </span>
-              </div>  
-
-              {/* Wallet selected but hidden */}
-                <button
-                  className="text-xs text-red-600 hover:underline text-left"
-                >
-                  Reveal private key
-                </button>
-
-              {/* Revealed */}
-                <div className="space-y-3">
-
-                  <div className="bg-zinc-50 border rounded-lg p-3">
-                    <p className="font-mono text-xs break-all text-zinc-800">
-                      kakvkjnqvub4tkjaskjvnnKLBEVRkvlvaekrntblnk
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <button
-                      
-                      className="text-xs px-2 py-1 rounded bg-zinc-100 hover:bg-zinc-200"
-                    >
-                      Copy
-                    </button>
-
-                    <button
-                      className="text-xs text-zinc-500 hover:underline"
-                    >
-                      Hide
-                    </button>
-                  </div>
-                </div>
-            </div>
+            {privateKeyCard && 
+              <PrivateKeyCard 
+                onClose={() => setPrivateKeyCard(false)}
+                activeWallet={activeWallet}
+              />
+            }
+            
           </div>
 
           {/* Right panel (wallets) */}
@@ -182,6 +148,8 @@ const DashBoard = ({ seedPhrase }) => {
                     onCloseSnackBar={handleCloseSnackBar}
                     handleClickSnackBar={handleClickSnackBar}
                     handleDelete={handleDelete}
+                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
+                    setActiveWallet={setActiveWallet}
                   />
                 )}
 
@@ -195,7 +163,8 @@ const DashBoard = ({ seedPhrase }) => {
                     onCloseSnackBar={handleCloseSnackBar}
                     handleClickSnackBar={handleClickSnackBar}
                     handleDelete={handleDelete}
-                  />
+                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
+                    setActiveWallet={setActiveWallet}                  />
                 ))}
 
               </div>

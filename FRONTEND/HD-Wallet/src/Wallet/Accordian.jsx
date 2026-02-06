@@ -18,11 +18,10 @@ const AccordionWallet = (
     openSnackBar,
     onCloseSnackBar,
     handleDelete,
+    privateKeyCard,
+    setActiveWallet
   }) => {
 
-   
-
-  
   return (
     <div>
       <Accordion
@@ -42,7 +41,13 @@ const AccordionWallet = (
           },
         }}
         expanded={expanded === `panel${wallet.index}`}
-        onChange={onChange(`panel${wallet.index}`)}
+        onChange={(event, isExpanded) => {
+          onChange(`panel${wallet.index}`)(event, isExpanded);
+
+          if (isExpanded) {
+            setActiveWallet(wallet);
+          }
+        }}
       >
 
       <AccordionSummary
@@ -124,7 +129,12 @@ const AccordionWallet = (
             </div>
 
             {/* Private key */}
-            <button className="text-xs text-zinc-500 hover:text-zinc-700 hover:underline text-left">
+            <button 
+              className="text-xs text-zinc-500 hover:text-zinc-700 hover:underline text-left"
+              onClick={() => {
+                privateKeyCard();
+              }}
+            >
               Reveal Private Key
             </button>
 
