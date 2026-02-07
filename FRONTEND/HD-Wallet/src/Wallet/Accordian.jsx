@@ -21,7 +21,9 @@ const AccordionWallet = (
     privateKeyCard,
     setActiveWallet,
     setRevealSendCard,
-    revealSendCard
+    revealSendCard,
+    setRevealPrivateKey,
+    revealPrivateKey
   }) => {
 
   return (
@@ -146,9 +148,10 @@ const AccordionWallet = (
               className="text-xs text-zinc-500 hover:text-zinc-700 hover:underline text-left"
               onClick={() => {
                 privateKeyCard();
+                setRevealPrivateKey();
               }}
             >
-              Reveal Private Key
+              { !revealPrivateKey ? "Hide Private Key" : "Reveal Private Key"}
             </button>
 
             <div className="border-t border-zinc-200" />

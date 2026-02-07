@@ -17,6 +17,7 @@ const DashBoard = ({ seedPhrase }) => {
   const [privateKeyCard, setPrivateKeyCard] = useState(false);
   const [activeWallet, setActiveWallet] = useState(null);
   const [revealSendCard, setRevealSendCard] = useState(false);
+  const [revealPrivateKey, setRevealPrivateKey] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -101,7 +102,10 @@ const DashBoard = ({ seedPhrase }) => {
             {/* Private Key Card */}
             {privateKeyCard && 
               <PrivateKeyCard 
-                onClose={() => setPrivateKeyCard(false)}
+                onClose={() => {
+                  setPrivateKeyCard(false)
+                  setRevealPrivateKey(!revealPrivateKey)
+                }}
                 activeWallet={activeWallet}
               />
             }
@@ -156,10 +160,12 @@ const DashBoard = ({ seedPhrase }) => {
                     onCloseSnackBar={handleCloseSnackBar}
                     handleClickSnackBar={handleClickSnackBar}
                     handleDelete={handleDelete}
-                    privateKeyCard={() => setPrivateKeyCard(true)}
+                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
                     setActiveWallet={setActiveWallet}
                     setRevealSendCard={setRevealSendCard}
                     revealSendCard={revealSendCard}
+                    setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
+                    revealPrivateKey={revealPrivateKey}
                   />
                 )}
 
@@ -173,10 +179,12 @@ const DashBoard = ({ seedPhrase }) => {
                     onCloseSnackBar={handleCloseSnackBar}
                     handleClickSnackBar={handleClickSnackBar}
                     handleDelete={handleDelete}
-                    privateKeyCard={() => setPrivateKeyCard(true)}
+                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
                     setActiveWallet={setActiveWallet}                  
                     setRevealSendCard={setRevealSendCard}
                     revealSendCard={revealSendCard}
+                    setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
+                    revealPrivateKey={revealPrivateKey}
                   />
                 ))}
 
