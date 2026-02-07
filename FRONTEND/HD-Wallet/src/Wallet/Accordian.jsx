@@ -19,7 +19,9 @@ const AccordionWallet = (
     onCloseSnackBar,
     handleDelete,
     privateKeyCard,
-    setActiveWallet
+    setActiveWallet,
+    setRevealSendCard,
+    revealSendCard
   }) => {
 
   return (
@@ -48,6 +50,17 @@ const AccordionWallet = (
             setActiveWallet(wallet);
           }
         }}
+        // onChange={(event, isExpanded) => {
+        //   const panelId = `panel${wallet.index}`;
+        //   const handler = onChange(panelId);
+
+        //   handler(event, isExpanded);
+
+        //   if (isExpanded) {
+        //     setActiveWallet(wallet);
+        //   }
+        // }}
+
       >
 
       <AccordionSummary
@@ -156,8 +169,9 @@ const AccordionWallet = (
                     backgroundColor: 'rgba(22,163,74,0.06)',
                   },
                 }}
+                onClick={() => setRevealSendCard(!revealSendCard)}
               >
-                Send
+                { revealSendCard ? "Cancel" : "Send"}
               </Button>
 
               <Button

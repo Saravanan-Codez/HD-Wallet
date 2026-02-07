@@ -4,6 +4,7 @@ import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
 import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase';
 import AccordionWallet from './Accordian';
 import PrivateKeyCard from './PrivateKeyCard';
+import SendCard from './SendCard';
 
 
 const DashBoard = ({ seedPhrase }) => {
@@ -15,6 +16,7 @@ const DashBoard = ({ seedPhrase }) => {
   const [wallets, setWallets] = useState([]);
   const [privateKeyCard, setPrivateKeyCard] = useState(false);
   const [activeWallet, setActiveWallet] = useState(null);
+  const [revealSendCard, setRevealSendCard] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -103,6 +105,12 @@ const DashBoard = ({ seedPhrase }) => {
                 activeWallet={activeWallet}
               />
             }
+            { revealSendCard && 
+              <SendCard 
+                onClose={() => setRevealSendCard(false)}
+                activeWallet={activeWallet}
+              />
+            }
             
           </div>
 
@@ -148,8 +156,10 @@ const DashBoard = ({ seedPhrase }) => {
                     onCloseSnackBar={handleCloseSnackBar}
                     handleClickSnackBar={handleClickSnackBar}
                     handleDelete={handleDelete}
-                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
+                    privateKeyCard={() => setPrivateKeyCard(true)}
                     setActiveWallet={setActiveWallet}
+                    setRevealSendCard={setRevealSendCard}
+                    revealSendCard={revealSendCard}
                   />
                 )}
 
@@ -163,8 +173,11 @@ const DashBoard = ({ seedPhrase }) => {
                     onCloseSnackBar={handleCloseSnackBar}
                     handleClickSnackBar={handleClickSnackBar}
                     handleDelete={handleDelete}
-                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
-                    setActiveWallet={setActiveWallet}                  />
+                    privateKeyCard={() => setPrivateKeyCard(true)}
+                    setActiveWallet={setActiveWallet}                  
+                    setRevealSendCard={setRevealSendCard}
+                    revealSendCard={revealSendCard}
+                  />
                 ))}
 
               </div>

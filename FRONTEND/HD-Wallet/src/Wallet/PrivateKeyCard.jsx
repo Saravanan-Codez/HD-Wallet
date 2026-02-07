@@ -35,7 +35,7 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
           className="text-xs text-red-600 hover:underline text-left"
           onClick={() => setPrivateKeyReveal(!privateKeyReveal)}
         >
-          ⦾ Reveal private key
+          { privateKeyReveal ? "⦾ Hide private key" : "⦾ Reveal private key"}
         </button>
 
       {/* Revealed state */}
