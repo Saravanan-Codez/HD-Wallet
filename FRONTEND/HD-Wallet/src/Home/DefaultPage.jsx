@@ -68,6 +68,7 @@ const DefaultPage = ({
           onPopClose={onPopClose}
           seedPhrase={seedPhrase}
           setDashBoard={setDashBoard}
+          newSeedPhrase={newSeedPhrase}
         />
       )}
     </>

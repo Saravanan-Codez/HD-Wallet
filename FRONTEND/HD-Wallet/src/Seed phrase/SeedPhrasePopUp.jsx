@@ -1,12 +1,12 @@
  
-import { seedFromMnemonic } from '../BIP Functions/generateSeedPhrase'
 
 export default function ImportSeedModal({ 
   setSeedPhrase,  
-  makeDots, 
+  // makeDots, 
   onPopClose,
   seedPhrase,
-  setDashBoard
+  setDashBoard,
+  newSeedPhrase
  }) {
 
   return (
@@ -46,9 +46,10 @@ export default function ImportSeedModal({
         rows={4}
         placeholder="example: forest apple stone ..."
         className="w-full p-3 text-sm bg-zinc-50 rounded-lg outline-none resize-none focus:ring-2 focus:ring-emerald-500"
-        value={makeDots(seedPhrase)}
+        value={seedPhrase}
         onChange={(e) => setSeedPhrase(e.target.value)}
       />
+
 
       {/* Helper */}
       <p className="text-xs text-zinc-500">
@@ -67,9 +68,10 @@ export default function ImportSeedModal({
         <button
           className="px-4 py-2 rounded-lg text-sm bg-emerald-600 text-white hover:bg-emerald-700"
           onClick={() => {
-            seedFromMnemonic(seedPhrase.trim());
+            setSeedPhrase(seedPhrase.trim());
             setDashBoard(true);
             onPopClose();
+            newSeedPhrase();
           }}
         >
           Import Wallet
