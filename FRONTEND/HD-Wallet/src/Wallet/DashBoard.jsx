@@ -6,6 +6,7 @@ import AccordionWallet from './Accordian';
 import PrivateKeyCard from './PrivateKeyCard';
 import SendCard from './SendCard';
 import AnimatedCard from '../Animations/AnimatedCard';
+import AnimatedPopup from '../Animations/AnimatedPopup'
 
 
 const DashBoard = ({ seedPhrase }) => {
@@ -201,7 +202,7 @@ const DashBoard = ({ seedPhrase }) => {
 
       {/* Mnemonic popup */}
       {mnemonicShow && (
-        <AnimatedCard>
+        <AnimatedPopup isOpen={mnemonicShow}>
           <MnemonicPopUp
             onClose={() => setMnemonicShow(false)}
             seedPhrase={seedPhrase}
@@ -209,7 +210,7 @@ const DashBoard = ({ seedPhrase }) => {
             onCloseSnackBar={handleCloseSnackBar}
             handleClickSnackBar={handleClickSnackBar}
           />
-        </AnimatedCard>
+        </AnimatedPopup>
       )}
     </div>
 
