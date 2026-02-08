@@ -2,7 +2,7 @@
 
 export default function ImportSeedModal({ 
   setSeedPhrase,  
-  // makeDots, 
+  makeDots, 
   onPopClose,
   seedPhrase,
   setDashBoard,
@@ -46,7 +46,7 @@ export default function ImportSeedModal({
         rows={4}
         placeholder="example: forest apple stone ..."
         className="w-full p-3 text-sm bg-zinc-50 rounded-lg outline-none resize-none focus:ring-2 focus:ring-emerald-500"
-        value={seedPhrase}
+        value={makeDots(seedPhrase)}
         onChange={(e) => setSeedPhrase(e.target.value)}
       />
 

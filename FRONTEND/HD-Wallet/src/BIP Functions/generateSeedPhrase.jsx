@@ -39,7 +39,7 @@ function generateWalletFromMnemonic(mnemonic, index) {
 
   const solanaKeypair = Keypair.fromSecretKey(
     naclKeypair.secretKey
-  );
+);
 
   const publicKeyBase58 = solanaKeypair.publicKey.toBase58();
   const privateKeyBase58 = bs58.encode(solanaKeypair.secretKey);

@@ -5,6 +5,7 @@ import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase'
 import AccordionWallet from './Accordian';
 import PrivateKeyCard from './PrivateKeyCard';
 import SendCard from './SendCard';
+import AnimatedCard from '../Animations/AnimatedCard';
 
 
 const DashBoard = ({ seedPhrase }) => {
@@ -101,6 +102,7 @@ const DashBoard = ({ seedPhrase }) => {
             
             {/* Private Key Card */}
             {privateKeyCard && 
+            <AnimatedCard>
               <PrivateKeyCard 
                 onClose={() => {
                   setPrivateKeyCard(false)
@@ -108,12 +110,15 @@ const DashBoard = ({ seedPhrase }) => {
                 }}
                 activeWallet={activeWallet}
               />
+            </AnimatedCard>
             }
             { revealSendCard && 
-              <SendCard 
-                onClose={() => setRevealSendCard(false)}
-                activeWallet={activeWallet}
-              />
+              <AnimatedCard>
+                <SendCard 
+                  onClose={() => setRevealSendCard(false)}
+                  activeWallet={activeWallet}
+                />
+              </AnimatedCard>
             }
             
           </div>
@@ -196,13 +201,15 @@ const DashBoard = ({ seedPhrase }) => {
 
       {/* Mnemonic popup */}
       {mnemonicShow && (
-        <MnemonicPopUp
-          onClose={() => setMnemonicShow(false)}
-          seedPhrase={seedPhrase}
-          openSnackBar={openSnackBar}
-          onCloseSnackBar={handleCloseSnackBar}
-          handleClickSnackBar={handleClickSnackBar}
-        />
+        <AnimatedCard>
+          <MnemonicPopUp
+            onClose={() => setMnemonicShow(false)}
+            seedPhrase={seedPhrase}
+            openSnackBar={openSnackBar}
+            onCloseSnackBar={handleCloseSnackBar}
+            handleClickSnackBar={handleClickSnackBar}
+          />
+        </AnimatedCard>
       )}
     </div>
 

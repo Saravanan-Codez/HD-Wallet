@@ -151,7 +151,7 @@ const AccordionWallet = (
                 setRevealPrivateKey();
               }}
             >
-              { !revealPrivateKey ? "Hide Private Key" : "Reveal Private Key"}
+              { revealPrivateKey ? "Hide Private Key" : "Reveal Private Key"}
             </button>
 
             <div className="border-t border-zinc-200" />

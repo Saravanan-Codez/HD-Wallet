@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { generateSeedPhrase } from '../BIP Functions/generateSeedPhrase';
 import DashBoard from '../Wallet/DashBoard';
 import DefaultPage from './DefaultPage';
+import AnimatedCard from '../Animations/AnimatedCard';
 
 const Home = () => {
 
@@ -32,10 +33,12 @@ const Home = () => {
       {dashBoard ? (
         // ✅ Dashboard layout (app-style)
         <div className="min-h-screen bg-zinc-50">
-          <DashBoard
-            seedPhrase={seedPhrase}
-            seed={seed}
-          />
+          <AnimatedCard>
+            <DashBoard
+              seedPhrase={seedPhrase}
+              seed={seed}
+            />
+          </AnimatedCard>
         </div>
       ) : (
         // ✅ Default page layout (card-style)
