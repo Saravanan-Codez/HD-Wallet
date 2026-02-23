@@ -7,6 +7,7 @@ import PrivateKeyCard from './PrivateKeyCard';
 import SendCard from './SendCard';
 import AnimatedCard from '../Animations/AnimatedCard';
 import AnimatedPopup from '../Animations/AnimatedPopup'
+import Button from '@mui/material/Button';
 
 
 const DashBoard = ({ seedPhrase }) => {
@@ -58,11 +59,14 @@ const DashBoard = ({ seedPhrase }) => {
   }
  
   return (
-    <div className="min-h-screen bg-zinc-100">
-      {/* Top bar */}
+    <div className="min-h-screen bg-zinc-100 flex flex-col">
+
+      {/* ================= TOP BAR ================= */}
       <div className="border-b bg-white">
-        <div className="px-8 py-4 flex items-center justify-between">
-          <div>
+        <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+
+          {/* Left side */}
+          <div className="flex flex-col">
             <h1 className="text-xl font-semibold text-zinc-900">
               HD Wallet
             </h1>
@@ -71,136 +75,153 @@ const DashBoard = ({ seedPhrase }) => {
             </p>
           </div>
 
-          <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-            Active
-          </span>
+          {/* Right side */}
+          <div>
+            <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+              Active
+            </span>
+          </div>
+
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      {/* ================= MAIN ================= */}
+      <div className="flex-1 w-full max-w-4xl mx-auto px-6 py-8 space-y-6">
 
-          {/* Left panel */}
-          <div className="lg:col-span-5 space-y-5">
-            <div className="bg-white rounded-xl border p-5 space-y-4">
-              <div className="flex justify-between items-center">
-                <p className="text-sm font-medium text-zinc-800">
-                  Recovery Phrase
-                </p>
-                <button
-                  className="text-sm text-emerald-600 hover:underline"
-                  onClick={() => setMnemonicShow(true)}
-                >
-                  View
-                </button>
-              </div>
+        {/* ========== SEED PHRASE CARD ========== */}
+        <div className="bg-white rounded-xl border p-5 space-y-4">
+          <div className="flex justify-between items-center">
+            <p className="text-sm font-medium text-zinc-800">
+              Recovery Phrase
+            </p>
+            <button
+              className="text-sm text-emerald-600 hover:underline"
+              onClick={() => setMnemonicShow(true)}
+            >
+              View
+            </button>
+          </div>
 
-              <p className="text-xs text-zinc-500">
-                Used to derive all wallets. Never share this phrase.
-              </p>
-            </div>
-            
-            {/* Private Key Card */}
-            {privateKeyCard && 
-            <AnimatedCard>
-              <PrivateKeyCard 
-                onClose={() => {
-                  setPrivateKeyCard(false)
-                  setRevealPrivateKey(!revealPrivateKey)
+          <p className="text-xs text-zinc-500">
+            Used to derive all wallets. Never share this phrase.
+          </p>
+        </div>
+
+
+        {/* ========== WALLETS SECTION ========== */}
+        <div className="bg-white rounded-xl border p-5 flex flex-col">
+
+          {/* Wallet header */}
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-medium text-zinc-900">
+              Wallets
+              <span> ({wallets.length + 1})</span>
+            </h2>
+
+            <div className="flex gap-2">
+              {/* <button
+                className="px-2 py-2 rounded bg-zinc-100 hover:bg-zinc-200"
+                onClick={handleAddWallet}
+              >
+                Add Wallet
+              </button> */}
+              <Button
+                onClick={handleAddWallet}
+                variant="contained"
+                sx={{
+                  backgroundColor: '#059669',
+                  color: '#ffffff',
+                  textTransform: 'none',
+                  fontWeight: 500,
+                  boxShadow: 'none',
+                  '&:hover': {
+                    backgroundColor: '#047857',
+                    boxShadow: 'none',
+                  },
                 }}
-                activeWallet={activeWallet}
-              />
-            </AnimatedCard>
-            }
-            { revealSendCard && 
-              <AnimatedCard>
-                <SendCard 
-                  onClose={() => setRevealSendCard(false)}
-                  activeWallet={activeWallet}
-                />
-              </AnimatedCard>
-            }
-            
+              >
+                Add wallet
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setWallets([]);
+                  setLastDerivedIndex(0);
+                }}
+                disabled={wallets.length === 0}
+                variant="outlined"
+                sx={{
+                  borderColor: '#D22B2B',
+                  color: '#D22B2B',
+                  textTransform: 'none',
+                  fontWeight: 500,
+                  boxShadow: 'none',
+
+                  '&:hover': {
+                    backgroundColor: '#fff1f1',   // lightest soft red
+                    borderColor: '#D22B2B',
+                    boxShadow: 'none',
+                  },
+
+                  '&.Mui-disabled': {
+                    borderColor: '#f3bcbc',
+                    color: '#f3bcbc',
+                  },
+                }}
+              >
+                Delete all
+              </Button>
+            </div>
           </div>
 
-          {/* Right panel (wallets) */}
-          <div className="lg:col-span-7">
-            <div className="bg-white rounded-xl border p-5 flex flex-col h-[calc(100vh-160px)]">
+          {/* Wallet list */}
+          <div className="max-h-[60vh] overflow-y-auto no-scrollbar space-y-3">
 
-              {/* Wallet header */}
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-medium text-zinc-900">
-                  Wallets
-                </h2>
+            {wallet0 && (
+              <AccordionWallet
+                wallet={wallet0}
+                expanded={expanded}
+                onChange={handleChange}
+                openSnackBar={openSnackBar}
+                onCloseSnackBar={handleCloseSnackBar}
+                handleClickSnackBar={handleClickSnackBar}
+                handleDelete={handleDelete}
+                privateKeyCard={() => setPrivateKeyCard(true)}
+                setActiveWallet={setActiveWallet}
+                setRevealSendCard={setRevealSendCard}
+                revealSendCard={revealSendCard}
+                setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
+                revealPrivateKey={revealPrivateKey}
+              />
+            )}
 
-                <div className="flex gap-2">
-                  <button
-                    className="px-3 py-2 rounded bg-zinc-100 hover:bg-zinc-200"
-                    onClick={handleAddWallet}
-                  >
-                    Add Wallet
-                  </button>
+            {wallets.map(wallet => (
+              <AccordionWallet
+                key={wallet.index}
+                wallet={wallet}
+                expanded={expanded}
+                onChange={handleChange}
+                openSnackBar={openSnackBar}
+                onCloseSnackBar={handleCloseSnackBar}
+                handleClickSnackBar={handleClickSnackBar}
+                handleDelete={handleDelete}
+                privateKeyCard={() => setPrivateKeyCard(true)}
+                setActiveWallet={setActiveWallet}
+                setRevealSendCard={setRevealSendCard}
+                revealSendCard={revealSendCard}
+                setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
+                revealPrivateKey={revealPrivateKey}
+              />
+            ))}
 
-                  <button
-                    className="px-3 py-2 rounded bg-red-100 text-red-600 hover:bg-red-200"
-                    onClick={() => {
-                      setWallets([]);
-                      setLastDerivedIndex(0);
-                    }}
-                  >
-                    Delete all
-                  </button>
-                </div>
-              </div>
-
-              {/* Wallet list */}
-              <div className="flex-1 overflow-y-auto no-scrollbar space-y-3">
-
-                {wallet0 && (
-                  <AccordionWallet
-                    wallet={wallet0}
-                    expanded={expanded}
-                    onChange={handleChange}
-                    openSnackBar={openSnackBar}
-                    onCloseSnackBar={handleCloseSnackBar}
-                    handleClickSnackBar={handleClickSnackBar}
-                    handleDelete={handleDelete}
-                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
-                    setActiveWallet={setActiveWallet}
-                    setRevealSendCard={setRevealSendCard}
-                    revealSendCard={revealSendCard}
-                    setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
-                    revealPrivateKey={revealPrivateKey}
-                  />
-                )}
-
-                {wallets.map(wallet => (
-                  <AccordionWallet
-                    key={wallet.index}
-                    wallet={wallet}
-                    expanded={expanded}
-                    onChange={handleChange}
-                    openSnackBar={openSnackBar}
-                    onCloseSnackBar={handleCloseSnackBar}
-                    handleClickSnackBar={handleClickSnackBar}
-                    handleDelete={handleDelete}
-                    privateKeyCard={() => setPrivateKeyCard(!privateKeyCard)}
-                    setActiveWallet={setActiveWallet}                  
-                    setRevealSendCard={setRevealSendCard}
-                    revealSendCard={revealSendCard}
-                    setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
-                    revealPrivateKey={revealPrivateKey}
-                  />
-                ))}
-
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Mnemonic popup */}
+
+      {/* ================= POPUPS ================= */}
+
+      {/* Mnemonic Popup */}
       {mnemonicShow && (
         <AnimatedPopup isOpen={mnemonicShow}>
           <MnemonicPopUp
@@ -212,6 +233,30 @@ const DashBoard = ({ seedPhrase }) => {
           />
         </AnimatedPopup>
       )}
+
+      {/* Private Key Popup */}
+      {privateKeyCard && (
+        <AnimatedPopup isOpen={privateKeyCard}>
+          <PrivateKeyCard
+            activeWallet={activeWallet}
+            onClose={() => {
+              setPrivateKeyCard(false);
+              setRevealPrivateKey(false);
+            }}
+          />
+        </AnimatedPopup>
+      )}
+
+      {/* Send Popup */}
+      {revealSendCard && (
+        <AnimatedPopup isOpen={revealSendCard}>
+          <SendCard
+            activeWallet={activeWallet}
+            onClose={() => setRevealSendCard(false)}
+          />
+        </AnimatedPopup>
+      )}
+
     </div>
 
   )

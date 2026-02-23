@@ -46,26 +46,6 @@ const MnemonicPopUp = (
           <div className ="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
             Anyone with this recovery phrase can fully control your wallet.
           </div>
-          
-          {
-            reveal && (
-              <div className="flex justify-end ">
-                <button
-                  
-                  onClick={() => {
-                    navigator.clipboard.writeText(seedPhrase);
-                    handleClickSnackBar();
-                  }}
-                  className="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-700 cursor-pointer opacity-60 hover:opacity-100"
-                >
-                  <img className="w-4 h-4" src={copyLogo}></img>
-                  <p>Copy</p>
-                </button>
-              </div>
-            )
-          }
-          
-
 
           {/* <!-- Seed Phrase Grid (12 words example) --> */}
           <div className ="grid grid-cols-3 gap-3">
@@ -90,22 +70,42 @@ const MnemonicPopUp = (
           </div>
 
           {/* <!-- Footer --> */}
-          <div className ="flex justify-between items-center pt-2">
+          <div className="flex justify-between items-center pt-2">
+
+            {/* LEFT SIDE (Reveal + Copy together) */}
+            <div className="flex items-center gap-3">
+              <button 
+                className="text-sm text-emerald-600 hover:underline cursor-pointer"
+                onClick={() => {
+                  setreveal(!reveal);
+                  console.log(seedPhrase);
+                }}
+              >
+                {reveal ? "Hide phrase" : "Reveal phrase"}
+              </button>
+
+              {reveal && (
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(seedPhrase);
+                    handleClickSnackBar();
+                  }}
+                  className="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-700 cursor-pointer opacity-60 hover:opacity-100"
+                >
+                  <img className="w-4 h-4" src={copyLogo} />
+                  <p>Copy</p>
+                </button>
+              )}
+            </div>
+
+            {/* RIGHT SIDE */}
             <button 
-              className ="text-sm text-emerald-600 hover:underline cursor-pointer"
-              onClick={() => {
-                setreveal(!reveal);
-                console.log(seedPhrase);
-              }}
-            >
-              { reveal ? "Hide phrase" : "Reveal phrase" }
-            </button>
-            <button 
-              className ="px-4 py-2 rounded-lg bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+              className="px-4 py-2 rounded-lg bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
               onClick={onClose}
             >
               Close
             </button>
+
           </div>
 
         </div>

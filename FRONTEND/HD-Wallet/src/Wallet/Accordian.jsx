@@ -38,12 +38,27 @@ const AccordionWallet = (
           overflow: 'hidden',
           transition: 'border-color 200ms ease, background-color 200ms ease',
           '&:before': { display: 'none' },
+
+          '& .MuiAccordionSummary-root': {
+            minHeight: 72,
+            padding: '0 16px',
+          },
+
+          '& .MuiAccordionSummary-content': {
+            margin: '12px 0',
+          },
+
+          '& .MuiAccordionDetails-root': {
+            padding: '5px 10px',
+          },
+
           '&.Mui-expanded': {
             margin: 0,
-            backgroundColor: '#fafafa', // zinc-50 (very subtle)
-            borderColor: '#d4d4d8',     // zinc-300
+            backgroundColor: '#fafafa',
+            borderColor: '#d4d4d8',
           },
         }}
+
         expanded={expanded === `panel${wallet.index}`}
         onChange={(event, isExpanded) => {
           onChange(`panel${wallet.index}`)(event, isExpanded);
