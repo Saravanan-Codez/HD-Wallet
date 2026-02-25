@@ -4,6 +4,7 @@ import { generateSeedPhrase } from '../BIP Functions/generateSeedPhrase';
 import DashBoard from '../Wallet/DashBoard';
 import DefaultPage from './DefaultPage';
 import AnimatedCard from '../Animations/AnimatedCard';
+import PasswordSetup from '../Password/PasswordSetup';
 
 const Home = () => {
 
@@ -11,6 +12,7 @@ const Home = () => {
   const [seedPhrase, setSeedPhrase] = useState('');
   const [seed, setSeed] = useState(null);
   const [dashBoard, setDashBoard] = useState(false);
+  const [password, setPassword] = useState('');
 
   // useEffect(() => {
   //   document.body.style.overflow = seedPhrasePop ? "hidden" : "hidden";
@@ -30,33 +32,38 @@ const Home = () => {
 
   return (
     <>
-      {dashBoard ? (
-        // ✅ Dashboard layout (app-style)
-        <div className="min-h-screen bg-zinc-50">
-          <AnimatedCard>
-            <DashBoard
-              seedPhrase={seedPhrase}
-              seed={seed}
-            />
-          </AnimatedCard>
-        </div>
-      ) : (
-        // ✅ Default page layout (card-style)
-        <div className="min-h-screen flex justify-center items-start bg-zinc-100 pt-24">
-          <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg transition-all duration-300">
-            <DefaultPage
-              onPopOpen={() => setSeedPhrasePop(true)}
-              newSeedPhrase={() => generateSeedPhrase(setSeedPhrase, setSeed)}
-              seedPhrasePop={seedPhrasePop}
-              setSeedPhrase={setSeedPhrase}
-              makeDots={makeDots}
-              onPopClose={() => setSeedPhrasePop(false)}
-              seedPhrase={seedPhrase}
-              setDashBoard={setDashBoard}
-            />
-          </div>
-        </div>
-      )}
+
+      {
+        password ? (
+          dashBoard ? (
+            <div className="min-h-screen bg-zinc-50">
+                <AnimatedCard>
+                  <DashBoard
+                    seedPhrase={seedPhrase}
+                    seed={seed}
+                  />
+                </AnimatedCard>
+              </div>
+          ) : (
+            <div className="min-h-screen flex justify-center items-start bg-zinc-100 pt-24">
+              <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg transition-all duration-300">
+                <DefaultPage
+                  onPopOpen={() => setSeedPhrasePop(true)}
+                  newSeedPhrase={() => generateSeedPhrase(setSeedPhrase, setSeed)}
+                  seedPhrasePop={seedPhrasePop}
+                  setSeedPhrase={setSeedPhrase}
+                  makeDots={makeDots}
+                  onPopClose={() => setSeedPhrasePop(false)}
+                  seedPhrase={seedPhrase}
+                  setDashBoard={setDashBoard}
+                />
+              </div>
+            </div>
+          )
+        ) : (
+          <PasswordSetup setPassword={setPassword}/>
+        )
+      }
     </>
   )
 }
