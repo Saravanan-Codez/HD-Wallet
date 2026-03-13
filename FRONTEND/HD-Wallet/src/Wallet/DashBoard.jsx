@@ -8,9 +8,10 @@ import SendCard from './SendCard';
 import AnimatedCard from '../Animations/AnimatedCard';
 import AnimatedPopup from '../Animations/AnimatedPopup'
 import Button from '@mui/material/Button';
+import PasswordCheck from '../Password/PasswordCheck';
 
 
-const DashBoard = ({ seedPhrase }) => {
+const DashBoard = ({ seedPhrase, password }) => {
 
   const [openSnackBar, setOpenSnackBar] = React.useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -21,6 +22,9 @@ const DashBoard = ({ seedPhrase }) => {
   const [activeWallet, setActiveWallet] = useState(null);
   const [revealSendCard, setRevealSendCard] = useState(false);
   const [revealPrivateKey, setRevealPrivateKey] = useState(false);
+  const [showCheckPassword, setShowCheckPassword] = useState(false);
+
+  const [authAction, setAuthAction] = useState(null);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -96,7 +100,10 @@ const DashBoard = ({ seedPhrase }) => {
             </p>
             <button
               className="text-sm text-emerald-600 hover:underline"
-              onClick={() => setMnemonicShow(true)}
+              onClick={() => {
+                setAuthAction(() => () => setMnemonicShow(true));
+                setShowCheckPassword(true);
+              }}
             >
               View
             </button>
@@ -255,6 +262,19 @@ const DashBoard = ({ seedPhrase }) => {
             onClose={() => setRevealSendCard(false)}
           />
         </AnimatedPopup>
+      )}
+
+      { showCheckPassword && (
+        <PasswordCheck 
+          password={password}
+          onSuccess={() => {
+              authAction();
+              setAuthAction(null);
+              setShowCheckPassword(false);
+            }
+          }
+          onClose={() => setShowCheckPassword(false)}
+        />
       )}
 
     </div>

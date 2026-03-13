@@ -41,6 +41,7 @@ const Home = () => {
                   <DashBoard
                     seedPhrase={seedPhrase}
                     seed={seed}
+                    password={password}
                   />
                 </AnimatedCard>
               </div>

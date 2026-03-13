@@ -4,8 +4,8 @@ import { useState } from 'react';
 const PasswordCheck = (
   { 
     password, 
-    onClose 
-
+    onSuccess,
+    onClose
   }) => {
 
   const [passwordInput, setPasswordInput] = useState('');
@@ -13,7 +13,9 @@ const PasswordCheck = (
   const authenticate = () => {
     if (passwordInput === password) {
       console.log('Authenticated'); 
-      onClose();
+      onSuccess();
+    } else {
+      console.log('Authentication failed => ', passwordInput, password);
     }
   }
 
