@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #101512;
+  --color-moss-dark: #1A221D;
+  --color-moss: #8FAF8B;
+  --color-moss-light: #C8D8C1;
+  --color-bone: #F3F1EA;
+  --color-muted: #A7ADA4;
+  --color-danger: #C96B5C;
+}
+
 /* Hide scrollbar but keep scrolling */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

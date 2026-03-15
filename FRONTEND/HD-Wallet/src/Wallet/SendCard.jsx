@@ -16,22 +16,22 @@ const SendCard = ({ onClose, activeWallet }) => {
       />
 
       {/* Modal Card */}
-      <div className="relative z-10 w-full max-w-lg bg-white rounded-xl border p-5 space-y-5 shadow-xl">
+      <div className="relative z-10 w-full max-w-lg bg-moss-dark rounded-xl border border-muted/20 p-5 space-y-5 shadow-xl">
 
         {/* Header */}
         <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-zinc-900">
+          <p className="text-sm font-medium text-bone">
             Send SOL
           </p>
-          <span className="text-xs text-zinc-400">
+          <span className="text-xs text-muted">
             Transaction
           </span>
         </div>
 
         {/* From */}
-        <div className="bg-zinc-100 border border-zinc-200 rounded-lg p-2 text-xs font-mono text-zinc-700 break-all select-text cursor-default">
+        <div className="bg-ink border border-muted/30 rounded-lg p-2 text-xs font-mono text-bone break-all select-text cursor-default">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] uppercase tracking-wide text-zinc-600">
+            <span className="text-[10px] uppercase tracking-wide text-muted">
               Sender address
             </span>
           </div>
@@ -41,11 +41,11 @@ const SendCard = ({ onClose, activeWallet }) => {
 
         {/* To */}
         <div>
-          <p className="text-xs text-zinc-500 mb-1">To</p>
+          <p className="text-xs text-muted mb-1">To</p>
           <input
             type="text"
             placeholder="Recipient address"
-            className="w-full text-xs bg-zinc-50 border rounded-lg p-2 outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full text-xs bg-ink text-bone border border-muted/30 rounded-lg p-2 outline-none focus:ring-2 focus:ring-moss placeholder:text-muted/50 transition-all"
           />
         </div>
 
@@ -54,11 +54,11 @@ const SendCard = ({ onClose, activeWallet }) => {
 
           {/* SOL Amount */}
           <div className="w-32">
-            <p className="text-xs text-zinc-500 mb-1">Amount (SOL)</p>
+            <p className="text-xs text-muted mb-1">Amount (SOL)</p>
             <input
               type="number"
               placeholder="0.00"
-              className="w-full text-xs bg-zinc-50 border rounded-lg p-2 outline-none focus:ring-2 focus:ring-emerald-500
+              className="w-full text-xs bg-ink text-bone border border-muted/30 rounded-lg p-2 outline-none focus:ring-2 focus:ring-moss placeholder:text-muted/50 transition-all
               [appearance:textfield]
               [&::-webkit-outer-spin-button]:appearance-none
               [&::-webkit-inner-spin-button]:appearance-none"
@@ -67,11 +67,11 @@ const SendCard = ({ onClose, activeWallet }) => {
 
           {/* Duplicate amount — consider renaming later */}
           <div className="w-32">
-            <p className="text-xs text-zinc-500 mb-1">Amount ({currency})</p>
+            <p className="text-xs text-muted mb-1">Amount ({currency})</p>
             <input
               type="number"
               placeholder="0.00"
-              className="w-full text-xs bg-zinc-50 border rounded-lg p-2 outline-none focus:ring-2 focus:ring-emerald-500
+              className="w-full text-xs bg-ink text-bone border border-muted/30 rounded-lg p-2 outline-none focus:ring-2 focus:ring-moss placeholder:text-muted/50 transition-all
               [appearance:textfield]
               [&::-webkit-outer-spin-button]:appearance-none
               [&::-webkit-inner-spin-button]:appearance-none"
@@ -80,7 +80,7 @@ const SendCard = ({ onClose, activeWallet }) => {
 
           {/* Currency */}
           <div className="w-24">
-            <p className="text-xs text-zinc-500 mb-1">Currency</p>
+            <p className="text-xs text-muted mb-1">Currency</p>
 
             <FormControl fullWidth size="small">
               <Select
@@ -88,11 +88,24 @@ const SendCard = ({ onClose, activeWallet }) => {
                 onChange={(e) => setCurrency(e.target.value)}
                 sx={{
                   fontSize: '0.75rem',
-                  backgroundColor: '#fafafa',
+                  backgroundColor: '#101512',
+                  color: '#F3F1EA',
                   borderRadius: '0.5rem',
+                  '.MuiOutlinedInput-notchedOutline': {
+                     borderColor: 'rgba(167, 173, 164, 0.3)',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                     borderColor: '#8FAF8B',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                     borderColor: '#8FAF8B',
+                  },
                   '& .MuiSelect-select': {
                     padding: '6px 8px',
                   },
+                  '& .MuiSvgIcon-root': {
+                    color: '#A7ADA4',
+                  }
                 }}
               >
                 <MenuItem value="USD">USD</MenuItem>
@@ -105,21 +118,21 @@ const SendCard = ({ onClose, activeWallet }) => {
         {/* Buttons */}
         <div className="flex items-center justify-between">
           <button
-            className="text-sm text-zinc-500 hover:text-zinc-700 hover:underline"
+            className="text-sm text-muted hover:text-bone hover:underline transition-colors"
             onClick={onClose}
           >
             Cancel
           </button>
 
           <button
-            className="px-4 py-2 rounded-md bg-emerald-500/90 text-white text-sm font-medium hover:bg-emerald-600 transition"
+            className="px-4 py-2 rounded-md bg-moss text-ink text-sm font-medium hover:bg-moss-light transition-all active:scale-95"
           >
             Send
           </button>
         </div>
 
         {/* Info */}
-        <p className="text-[11px] text-zinc-400 text-center">
+        <p className="text-[11px] text-muted text-center">
           Always verify the recipient address. Transactions cannot be reversed.
         </p>
 

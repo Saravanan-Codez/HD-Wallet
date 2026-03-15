@@ -36,7 +36,7 @@ const Home = () => {
       {
         password ? (
           dashBoard ? (
-            <div className="min-h-screen bg-zinc-50">
+            <div className="min-h-screen bg-ink">
                 <AnimatedCard>
                   <DashBoard
                     seedPhrase={seedPhrase}
@@ -46,8 +46,8 @@ const Home = () => {
                 </AnimatedCard>
               </div>
           ) : (
-            <div className="min-h-screen flex justify-center items-start bg-zinc-100 pt-24">
-              <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg transition-all duration-300">
+            <div className="min-h-screen flex justify-center items-start bg-ink pt-24">
+              <div className="w-full max-w-lg bg-moss-dark rounded-2xl shadow-lg transition-all duration-300">
                 <DefaultPage
                   onPopOpen={() => setSeedPhrasePop(true)}
                   newSeedPhrase={() => generateSeedPhrase(setSeedPhrase, setSeed)}

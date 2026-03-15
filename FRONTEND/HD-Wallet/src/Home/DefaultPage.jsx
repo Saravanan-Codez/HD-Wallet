@@ -14,17 +14,17 @@ const DefaultPage = ({
   return (
     <>
       {/* APP SHELL */}
-      <div className="fixed inset-0 bg-linear-to-br from-zinc-50 to-zinc-100 flex items-center justify-center">
+      <div className="fixed inset-0 bg-ink flex items-center justify-center">
 
         {/* CARD */}
-        <div className="w-full max-w-sm bg-white rounded-2xl border shadow-sm p-8">
+        <div className="w-full max-w-sm bg-moss-dark rounded-2xl border border-muted/20 shadow-sm p-8">
 
           {/* HEADER */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-semibold text-zinc-900">
+            <h1 className="text-2xl font-semibold text-bone">
               HD Wallet
             </h1>
-            <p className="text-sm text-zinc-500 mt-1">
+            <p className="text-sm text-muted mt-1">
               Securely create or import a wallet to continue
             </p>
           </div>
@@ -38,7 +38,7 @@ const DefaultPage = ({
                 newSeedPhrase();
                 setDashBoard(true);
               }}
-              className="w-full py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition"
+              className="w-full py-3 rounded-lg bg-moss text-ink font-medium hover:bg-moss-light transition-all active:scale-95"
             >
               Generate New Wallet
             </button>
@@ -46,14 +46,14 @@ const DefaultPage = ({
             {/* Secondary */}
             <button
               onClick={onPopOpen}
-              className="w-full py-3 rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-50 transition"
+              className="w-full py-3 rounded-lg border border-moss text-moss hover:bg-moss/10 transition-all active:scale-95"
             >
               Import Existing Wallet
             </button>
           </div>
 
           {/* FOOTER NOTE */}
-          <p className="text-xs text-zinc-400 text-center mt-6">
+          <p className="text-xs text-muted text-center mt-6">
             Your keys are generated and stored locally.
           </p>
 

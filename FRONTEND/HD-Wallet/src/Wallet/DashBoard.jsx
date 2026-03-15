@@ -23,7 +23,6 @@ const DashBoard = ({ seedPhrase, password }) => {
   const [revealSendCard, setRevealSendCard] = useState(false);
   const [revealPrivateKey, setRevealPrivateKey] = useState(false);
   const [showCheckPassword, setShowCheckPassword] = useState(false);
-
   const [authAction, setAuthAction] = useState(null);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -63,25 +62,25 @@ const DashBoard = ({ seedPhrase, password }) => {
   }
  
   return (
-    <div className="min-h-screen bg-zinc-100 flex flex-col">
+    <div className="min-h-screen bg-ink flex flex-col">
 
       {/* ================= TOP BAR ================= */}
-      <div className="border-b bg-white">
+      <div className="border-b border-muted/20 bg-moss-dark">
         <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
 
           {/* Left side */}
           <div className="flex flex-col">
-            <h1 className="text-xl font-semibold text-zinc-900">
+            <h1 className="text-xl font-semibold text-bone">
               HD Wallet
             </h1>
-            <p className="text-xs text-zinc-500">
+            <p className="text-xs text-muted">
               Hierarchical deterministic wallet manager
             </p>
           </div>
 
           {/* Right side */}
           <div>
-            <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+            <span className="text-xs text-ink bg-moss px-3 py-1 rounded-full">
               Active
             </span>
           </div>
@@ -93,13 +92,13 @@ const DashBoard = ({ seedPhrase, password }) => {
       <div className="flex-1 w-full max-w-4xl mx-auto px-6 py-8 space-y-6">
 
         {/* ========== SEED PHRASE CARD ========== */}
-        <div className="bg-white rounded-xl border p-5 space-y-4">
+        <div className="bg-moss-dark rounded-xl border border-muted/20 p-5 space-y-4 shadow-sm">
           <div className="flex justify-between items-center">
-            <p className="text-sm font-medium text-zinc-800">
+            <p className="text-sm font-medium text-bone">
               Recovery Phrase
             </p>
             <button
-              className="text-sm text-emerald-600 hover:underline"
+              className="text-sm text-moss hover:text-moss-light transition-colors hover:underline"
               onClick={() => {
                 setAuthAction(() => () => setMnemonicShow(true));
                 setShowCheckPassword(true);
@@ -109,20 +108,20 @@ const DashBoard = ({ seedPhrase, password }) => {
             </button>
           </div>
 
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-muted">
             Used to derive all wallets. Never share this phrase.
           </p>
         </div>
 
 
         {/* ========== WALLETS SECTION ========== */}
-        <div className="bg-white rounded-xl border p-5 flex flex-col">
+        <div className="bg-moss-dark rounded-xl border border-muted/20 p-5 flex flex-col shadow-sm">
 
           {/* Wallet header */}
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-medium text-zinc-900">
+            <h2 className="text-lg font-medium text-bone">
               Wallets
-              <span> ({wallets.length + 1})</span>
+              <span className="text-muted"> ({wallets.length + 1})</span>
             </h2>
 
             <div className="flex gap-2">
@@ -136,13 +135,14 @@ const DashBoard = ({ seedPhrase, password }) => {
                 onClick={handleAddWallet}
                 variant="contained"
                 sx={{
-                  backgroundColor: '#059669',
-                  color: '#ffffff',
+                  backgroundColor: '#8FAF8B',
+                  color: '#101512',
                   textTransform: 'none',
                   fontWeight: 500,
                   boxShadow: 'none',
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    backgroundColor: '#047857',
+                    backgroundColor: '#C8D8C1',
                     boxShadow: 'none',
                   },
                 }}
@@ -158,21 +158,21 @@ const DashBoard = ({ seedPhrase, password }) => {
                 disabled={wallets.length === 0}
                 variant="outlined"
                 sx={{
-                  borderColor: '#D22B2B',
-                  color: '#D22B2B',
+                  borderColor: '#C96B5C',
+                  color: '#C96B5C',
                   textTransform: 'none',
                   fontWeight: 500,
                   boxShadow: 'none',
-
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    backgroundColor: '#fff1f1',   // lightest soft red
-                    borderColor: '#D22B2B',
+                    backgroundColor: 'rgba(201, 107, 92, 0.1)',
+                    borderColor: '#C96B5C',
                     boxShadow: 'none',
                   },
 
                   '&.Mui-disabled': {
-                    borderColor: '#f3bcbc',
-                    color: '#f3bcbc',
+                    borderColor: 'rgba(201, 107, 92, 0.3)',
+                    color: 'rgba(201, 107, 92, 0.3)',
                   },
                 }}
               >
@@ -197,8 +197,10 @@ const DashBoard = ({ seedPhrase, password }) => {
                 setActiveWallet={setActiveWallet}
                 setRevealSendCard={setRevealSendCard}
                 revealSendCard={revealSendCard}
-                setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
+                setRevealPrivateKey={() => setRevealPrivateKey(prev => !prev)}
                 revealPrivateKey={revealPrivateKey}
+                setShowCheckPassword={() => setShowCheckPassword(true)}
+                setAuthAction={setAuthAction}
               />
             )}
 
@@ -216,8 +218,10 @@ const DashBoard = ({ seedPhrase, password }) => {
                 setActiveWallet={setActiveWallet}
                 setRevealSendCard={setRevealSendCard}
                 revealSendCard={revealSendCard}
-                setRevealPrivateKey={() => setRevealPrivateKey(!revealPrivateKey)}
+                setRevealPrivateKey={() => setRevealPrivateKey(prev => !prev)}
                 revealPrivateKey={revealPrivateKey}
+                setShowCheckPassword={() => setShowCheckPassword(true)}
+                setAuthAction={setAuthAction}
               />
             ))}
 

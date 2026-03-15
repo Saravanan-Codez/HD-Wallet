@@ -21,21 +21,21 @@ const MnemonicPopUp = (
       <div className ="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
 
         {/* <!-- Modal --> */}
-        <div className ="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6 space-y-6">
+        <div className ="w-full max-w-lg bg-moss-dark border border-muted/20 rounded-2xl shadow-xl p-6 space-y-6">
 
           {/* <!-- Header --> */}
           <div className ="flex justify-between items-start">
             <div>
-              <h2 className ="text-lg font-semibold text-zinc-900">
+              <h2 className ="text-lg font-semibold text-bone">
                 Recovery Phrase
               </h2>
-              <p className ="text-sm text-zinc-500">
+              <p className ="text-sm text-muted">
                 Never share this phrase with anyone
               </p>
             </div>
 
             <button 
-              className ="text-zinc-400 hover:text-zinc-600 text-xl"
+              className ="text-muted hover:text-bone transition-colors text-xl"
               onClick={onClose}
             >
               ✕
@@ -43,7 +43,7 @@ const MnemonicPopUp = (
           </div>
 
           {/* <!-- Warning --> */}
-          <div className ="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+          <div className ="text-xs text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
             Anyone with this recovery phrase can fully control your wallet.
           </div>
 
@@ -54,13 +54,13 @@ const MnemonicPopUp = (
             {seedPhrase.split(" ").map((word, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50"
+                className="flex items-center gap-2 border border-muted/30 rounded-lg px-3 py-2 bg-ink"
               >
-                <span className="text-xs text-zinc-400 w-4">
+                <span className="text-xs text-muted w-4">
                   {index + 1}
                 </span>
 
-                <span className="text-sm font-mono text-zinc-900">
+                <span className="text-sm font-mono text-bone">
                   {reveal ? word : "••••••••"}
                 </span>
               </div>
@@ -75,7 +75,7 @@ const MnemonicPopUp = (
             {/* LEFT SIDE (Reveal + Copy together) */}
             <div className="flex items-center gap-3">
               <button 
-                className="text-sm text-emerald-600 hover:underline cursor-pointer"
+                className="text-sm font-medium text-moss hover:text-moss-light hover:underline cursor-pointer transition-colors"
                 onClick={() => {
                   setreveal(!reveal);
                   console.log(seedPhrase);
@@ -90,7 +90,7 @@ const MnemonicPopUp = (
                     navigator.clipboard.writeText(seedPhrase);
                     handleClickSnackBar();
                   }}
-                  className="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-700 cursor-pointer opacity-60 hover:opacity-100"
+                  className="flex items-center gap-1 text-xs text-muted hover:text-bone cursor-pointer opacity-60 hover:opacity-100 transition-all"
                 >
                   <img className="w-4 h-4" src={copyLogo} />
                   <p>Copy</p>
@@ -100,7 +100,7 @@ const MnemonicPopUp = (
 
             {/* RIGHT SIDE */}
             <button 
-              className="px-4 py-2 rounded-lg bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+              className="px-4 py-2 rounded-lg bg-ink border border-muted/30 text-bone hover:bg-muted/20 transition-all font-medium"
               onClick={onClose}
             >
               Close
@@ -118,6 +118,18 @@ const MnemonicPopUp = (
             autoHideDuration={2000}
             onClose={onCloseSnackBar}
             message="Seed phrase copied to clipboard"
+            ContentProps={{
+              sx: {
+                backgroundColor: "#101512", // ink
+                color: "#F3F1EA",           // bone
+                border: '1px solid rgba(167, 173, 164, 0.3)',
+                borderRadius: "12px",
+                fontSize: "0.875rem",
+                boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+                paddingX: 2.5,
+                paddingY: 1.25,
+              },
+            }}
           />
         )
       }

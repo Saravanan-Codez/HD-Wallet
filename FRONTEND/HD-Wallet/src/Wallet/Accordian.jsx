@@ -23,7 +23,9 @@ const AccordionWallet = (
     setRevealSendCard,
     revealSendCard,
     setRevealPrivateKey,
-    revealPrivateKey
+    revealPrivateKey,
+    setAuthAction,
+    setShowCheckPassword
   }) => {
 
   return (
@@ -33,9 +35,11 @@ const AccordionWallet = (
         square
         elevation={0}
         sx={{
-          border: '1px solid #e5e7eb',
+          border: '1px solid rgba(167, 173, 164, 0.2)',
           borderRadius: '0.75rem',
           overflow: 'hidden',
+          backgroundColor: 'transparent',
+          color: '#F3F1EA',
           transition: 'border-color 200ms ease, background-color 200ms ease',
           '&:before': { display: 'none' },
 
@@ -54,8 +58,8 @@ const AccordionWallet = (
 
           '&.Mui-expanded': {
             margin: 0,
-            backgroundColor: '#fafafa',
-            borderColor: '#d4d4d8',
+            backgroundColor: '#1A221D',
+            borderColor: 'rgba(167, 173, 164, 0.5)',
           },
         }}
 
@@ -81,7 +85,7 @@ const AccordionWallet = (
       >
 
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon sx={{ color: '#A7ADA4' }} />}
         sx={{
           transition: 'min-height 200ms ease',
           '& .MuiAccordionSummary-expandIconWrapper': {
@@ -114,18 +118,18 @@ const AccordionWallet = (
 
             {/* Balance row */}
             <div className="flex items-center justify-between">
-              <p className="text-zinc-600">Balance</p>
-              <p className="font-semibold text-base text-zinc-900">
+              <p className="text-muted">Balance</p>
+              <p className="font-semibold text-base text-bone">
                 0.00 SOL
               </p>
             </div>
 
-            <div className="border-t border-zinc-200" />
+            <div className="border-t border-muted/20" />
 
             {/* Derivation path */}
             <div>
-              <p className="text-xs text-zinc-500 mb-1">Derivation Path</p>
-              <p className="font-mono text-xs text-zinc-800">
+              <p className="text-xs text-muted mb-1">Derivation Path</p>
+              <p className="font-mono text-xs text-bone">
                 {wallet.path}
               </p>
             </div>
@@ -134,14 +138,14 @@ const AccordionWallet = (
             <div className="space-y-1 group">
               {/* Label + Copy */}
               <div className="flex items-center gap-2">
-                <p className="text-xs text-zinc-500">Public Key</p>
+                <p className="text-xs text-muted">Public Key</p>
 
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(wallet.publicKeyBase58);
                     handleClickSnackBar();
                   }}
-                  className="p-1 rounded hover:bg-zinc-100 opacity-0 group-hover:opacity-100"
+                  className="p-1 rounded hover:bg-ink opacity-0 group-hover:opacity-100 transition-colors"
                   title="Copy public key"
                 >
                   <img
@@ -153,23 +157,31 @@ const AccordionWallet = (
               </div>
 
               {/* Value */}
-              <p className="font-mono text-xs break-all text-zinc-800">
+              <p className="font-mono text-xs break-all text-bone">
                 {wallet.publicKeyBase58}
               </p>
             </div>
 
             {/* Private key */}
             <button 
-              className="text-xs text-zinc-500 hover:text-zinc-700 hover:underline text-left"
+              className="text-xs text-muted hover:text-bone hover:underline text-left hover:cursor-pointer transition-colors"
               onClick={() => {
-                privateKeyCard();
-                setRevealPrivateKey();
+                if (revealPrivateKey) {
+                  setRevealPrivateKey(false);
+                } else {
+                  setAuthAction(() => () => {
+                    privateKeyCard();
+                    setRevealPrivateKey(true);
+                    console.log('Private key revealed');
+                  });
+                  setShowCheckPassword(true);
+                }
               }}
             >
               { revealPrivateKey ? "Hide Private Key" : "Reveal Private Key"}
             </button>
 
-            <div className="border-t border-zinc-200" />
+            <div className="border-t border-muted/20" />
 
             {/* Actions row */}
             <div className="flex items-center gap-3">
@@ -178,13 +190,14 @@ const AccordionWallet = (
               <Button
                 variant="outlined"
                 sx={{
-                  borderColor: '#16a34a',
-                  color: '#16a34a',
+                  borderColor: '#8FAF8B',
+                  color: '#8FAF8B',
                   textTransform: 'none',
                   fontWeight: 500,
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    borderColor: '#15803d',
-                    backgroundColor: 'rgba(22,163,74,0.06)',
+                    borderColor: '#C8D8C1',
+                    backgroundColor: 'rgba(143, 175, 139, 0.1)',
                   },
                 }}
                 onClick={() => setRevealSendCard(!revealSendCard)}
@@ -195,13 +208,14 @@ const AccordionWallet = (
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: '#059669',
-                  color: '#ffffff',
+                  backgroundColor: '#8FAF8B',
+                  color: '#101512',
                   textTransform: 'none',
                   fontWeight: 500,
                   boxShadow: 'none',
+                  transition: 'all 0.2s',
                   '&:hover': {
-                    backgroundColor: '#047857',
+                    backgroundColor: '#C8D8C1',
                     boxShadow: 'none',
                   },
                 }}
@@ -213,7 +227,7 @@ const AccordionWallet = (
               {wallet.index !== 0 && (
                 <button
                   onClick={() => handleDelete(wallet.index)}
-                  className="ml-auto p-2 rounded hover:bg-red-50 text-red-600"
+                  className="ml-auto p-2 rounded hover:bg-danger/20 text-danger transition-colors"
                   title="Delete wallet"
                 >
                   <DeleteIcon fontSize="small" />
@@ -233,8 +247,9 @@ const AccordionWallet = (
             // anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             ContentProps={{
               sx: {
-                backgroundColor: "#fffbfo", // zinc-900
-                color: "#fffbfo",           // zinc-50
+                backgroundColor: "#101512", // ink
+                color: "#F3F1EA",           // bone
+                border: '1px solid rgba(167, 173, 164, 0.3)',
                 borderRadius: "12px",
                 fontSize: "0.875rem",
                 boxShadow: "0 10px 25px rgba(0,0,0,0.15)",

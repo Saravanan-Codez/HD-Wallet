@@ -17,16 +17,16 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
   />
 
   {/* Modal Card */}
-  <div className="relative z-10 w-full max-w-md bg-white rounded-xl border p-5 space-y-4 shadow-xl">
+  <div className="relative z-10 w-full max-w-md bg-moss-dark rounded-xl border border-muted/20 p-5 space-y-4 shadow-xl">
 
     {/* Header */}
     <div className="flex items-center justify-between">
-      <p className="text-sm font-medium text-zinc-900">
+      <p className="text-sm font-medium text-bone">
         Private Key
       </p>
 
       <button
-        className="text-zinc-400 hover:text-zinc-600"
+        className="text-muted hover:text-bone transition-colors"
         aria-label="Close private key"
         onClick={onClose}
       >
@@ -36,7 +36,7 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
 
     {/* Toggle Reveal */}
     <button
-      className="text-xs text-red-600 hover:underline text-left"
+      className="text-xs text-danger hover:underline text-left transition-colors"
       onClick={() => setPrivateKeyReveal(!privateKeyReveal)}
     >
       {privateKeyReveal ? "⦾ Hide private key" : "⦾ Reveal private key"}
@@ -45,8 +45,8 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
     {/* Key Display */}
     <div className="space-y-3">
 
-      <div className="bg-zinc-50 border rounded-lg p-3">
-        <p className="font-mono text-xs break-all text-zinc-800">
+      <div className="bg-ink border border-muted/30 rounded-lg p-3">
+        <p className="font-mono text-xs break-all text-bone">
           {privateKeyReveal
             ? activeWallet.privateKeyBase58
             : "•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••"}
@@ -59,7 +59,7 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
           onClick={() => {
             navigator.clipboard.writeText(activeWallet.privateKeyBase58);
           }}
-          className="flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-700 cursor-pointer opacity-60 hover:opacity-100"
+          className="flex items-center gap-1 text-xs text-muted hover:text-bone cursor-pointer opacity-60 hover:opacity-100 transition-all"
         >
           <img className="w-4 h-4" src={copyLogo} alt="copy" />
           <p>Copy</p>
@@ -68,8 +68,8 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
 
       {/* Warning */}
       {privateKeyReveal && (
-        <div className="flex items-start justify-between gap-3 bg-red-50 border border-red-200 rounded-lg p-3">
-          <div className="text-xs text-red-700">
+        <div className="flex items-start justify-between gap-3 bg-danger/10 border border-danger/30 rounded-lg p-3">
+          <div className="text-xs text-danger">
             <p className="font-medium">Sensitive information</p>
             <p className="mt-0.5">
               Don't share your private key with anyone.
@@ -77,7 +77,7 @@ const PrivateKeyCard = ({ onClose, activeWallet }) => {
           </div>
 
           <button
-            className="text-red-400 hover:text-red-600"
+            className="text-danger/70 hover:text-danger transition-colors"
             aria-label="Dismiss warning"
             onClick={() => setPrivateKeyReveal(false)}
           >
