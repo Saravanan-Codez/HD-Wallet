@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { generateSeedPhrase } from '../BIP Functions/generateSeedPhrase';
+import { generateSeedPhrase } from '../BIP Functions/Credentials/generateSeedPhrase';
 import DashBoard from '../Wallet/DashBoard';
 import DefaultPage from './DefaultPage';
 import AnimatedCard from '../Animations/AnimatedCard';
@@ -34,7 +34,7 @@ const Home = () => {
     <>
 
       {
-        password ? (
+        password ? ( 
           dashBoard ? (
             <div className="min-h-screen bg-ink">
                 <AnimatedCard>

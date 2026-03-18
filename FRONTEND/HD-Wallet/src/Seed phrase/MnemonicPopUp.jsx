@@ -92,7 +92,11 @@ const MnemonicPopUp = (
                   }}
                   className="flex items-center gap-1 text-xs text-muted hover:text-bone cursor-pointer opacity-60 hover:opacity-100 transition-all"
                 >
-                  <img className="w-4 h-4" src={copyLogo} />
+                  <img
+                    src={copyLogo}
+                    alt="Copy"
+                    className="w-4 h-4 opacity-90 hover:opacity-100 invert"
+                  />
                   <p>Copy</p>
                 </button>
               )}

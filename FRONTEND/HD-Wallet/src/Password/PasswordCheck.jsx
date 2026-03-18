@@ -15,7 +15,11 @@ const PasswordCheck = (
     if (passwordInput === password) {
       console.log('Authenticated'); 
       onSuccess();
-    } else {
+    } else if (passwordInput === '') {
+      console.log('Password cannot be empty');
+      setError(true);
+    }
+    else {
       console.log('Authentication failed => ', passwordInput, password);
       setError(true);
     }
@@ -42,13 +46,24 @@ const PasswordCheck = (
             className="w-full px-4 py-2 rounded-lg bg-ink text-bone border border-muted/30 focus:outline-none focus:ring-2 focus:ring-moss focus:border-moss transition-all placeholder:text-muted/50"
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
+            onFocus={() => setError(false)}
           />
         </div>
-        {error && (
-          <p className="text-sm text-danger mb-5">
-            Incorrect password. Please try again.
-          </p>
+        {/* <!-- Warnings --> */}
+        { 
+          error && passwordInput !== '' && (
+            <p className="text-sm text-danger mb-5">
+              Incorrect password. Please try again.
+            </p>
         )}
+
+        {
+          error && passwordInput === '' && (
+            <p className="text-sm text-danger mb-5">
+              Password cannot be empty.
+            </p>
+          )
+        }
 
         {/* <!-- Buttons --> */}
         <div className="flex justify-end gap-3">

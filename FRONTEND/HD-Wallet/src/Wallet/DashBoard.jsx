@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useMemo } from 'react';
 import MnemonicPopUp from '../Seed phrase/MnemonicPopUp';
-import { generateWalletFromMnemonic } from '../BIP Functions/generateSeedPhrase';
+import { generateWalletFromMnemonic } from '../BIP Functions/Credentials/generateSeedPhrase';
 import AccordionWallet from './Accordian';
 import PrivateKeyCard from './PrivateKeyCard';
 import SendCard from './SendCard';

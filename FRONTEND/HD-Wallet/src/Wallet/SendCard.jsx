@@ -4,7 +4,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
 const SendCard = ({ onClose, activeWallet }) => {
-  const [currency, setCurrency] = React.useState('USD');
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -63,55 +62,6 @@ const SendCard = ({ onClose, activeWallet }) => {
               [&::-webkit-outer-spin-button]:appearance-none
               [&::-webkit-inner-spin-button]:appearance-none"
             />
-          </div>
-
-          {/* Duplicate amount — consider renaming later */}
-          <div className="w-32">
-            <p className="text-xs text-muted mb-1">Amount ({currency})</p>
-            <input
-              type="number"
-              placeholder="0.00"
-              className="w-full text-xs bg-ink text-bone border border-muted/30 rounded-lg p-2 outline-none focus:ring-2 focus:ring-moss placeholder:text-muted/50 transition-all
-              [appearance:textfield]
-              [&::-webkit-outer-spin-button]:appearance-none
-              [&::-webkit-inner-spin-button]:appearance-none"
-            />
-          </div>
-
-          {/* Currency */}
-          <div className="w-24">
-            <p className="text-xs text-muted mb-1">Currency</p>
-
-            <FormControl fullWidth size="small">
-              <Select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                sx={{
-                  fontSize: '0.75rem',
-                  backgroundColor: '#101512',
-                  color: '#F3F1EA',
-                  borderRadius: '0.5rem',
-                  '.MuiOutlinedInput-notchedOutline': {
-                     borderColor: 'rgba(167, 173, 164, 0.3)',
-                  },
-                  '&:hover .MuiOutlinedInput-notchedOutline': {
-                     borderColor: '#8FAF8B',
-                  },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                     borderColor: '#8FAF8B',
-                  },
-                  '& .MuiSelect-select': {
-                    padding: '6px 8px',
-                  },
-                  '& .MuiSvgIcon-root': {
-                    color: '#A7ADA4',
-                  }
-                }}
-              >
-                <MenuItem value="USD">USD</MenuItem>
-                <MenuItem value="INR">INR</MenuItem>
-              </Select>
-            </FormControl>
           </div>
         </div>
 

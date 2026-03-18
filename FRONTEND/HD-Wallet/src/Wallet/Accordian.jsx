@@ -151,7 +151,7 @@ const AccordionWallet = (
                   <img
                     src={copyLogo}
                     alt="Copy"
-                    className="w-4 h-4 opacity-70 hover:opacity-100"
+                    className="w-4 h-4 opacity-80 hover:opacity-100 invert"
                   />
                 </button>
               </div>
