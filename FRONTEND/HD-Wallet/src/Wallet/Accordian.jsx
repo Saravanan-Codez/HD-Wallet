@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -25,12 +26,26 @@ const AccordionWallet = (
     setRevealPrivateKey,
     revealPrivateKey,
     setAuthAction,
-    setShowCheckPassword
+    setShowCheckPassword,
+    getSOLBalance
   }) => {
+
+  const [SOLbalance, setSOLBalance] = useState(null);
+
+  const handleGetSOLBalance = async () => {
+    try {
+      const balance = await getSOLBalance(wallet.publicKeyBase58);
+      setSOLBalance(balance);
+
+    } catch (error) {
+      console.error('Error fetching SOL balance:', error);
+    }
+  }
 
   return (
     <div>
       <Accordion
+        onClick={handleGetSOLBalance}
         disableGutters
         square
         elevation={0}
@@ -120,7 +135,7 @@ const AccordionWallet = (
             <div className="flex items-center justify-between">
               <p className="text-muted">Balance</p>
               <p className="font-semibold text-base text-bone">
-                0.00 SOL
+                {SOLbalance !== null ? `${SOLbalance} SOL` : 'Loading...'}
               </p>
             </div>
 

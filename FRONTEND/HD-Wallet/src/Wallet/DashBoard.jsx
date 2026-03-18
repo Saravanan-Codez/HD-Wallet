@@ -9,6 +9,7 @@ import AnimatedCard from '../Animations/AnimatedCard';
 import AnimatedPopup from '../Animations/AnimatedPopup'
 import Button from '@mui/material/Button';
 import PasswordCheck from '../Password/PasswordCheck';
+import { getSOLBalance } from '../BIP Functions/Operations/Balance_fetch';
 
 
 const DashBoard = ({ seedPhrase, password }) => {
@@ -81,7 +82,7 @@ const DashBoard = ({ seedPhrase, password }) => {
           {/* Right side */}
           <div>
             <span className="text-xs text-ink bg-moss px-3 py-1 rounded-full">
-              Active
+              Running in DEVNET
             </span>
           </div>
 
@@ -201,6 +202,7 @@ const DashBoard = ({ seedPhrase, password }) => {
                 revealPrivateKey={revealPrivateKey}
                 setShowCheckPassword={() => setShowCheckPassword(true)}
                 setAuthAction={setAuthAction}
+                getSOLBalance={getSOLBalance}
               />
             )}
 
@@ -222,6 +224,8 @@ const DashBoard = ({ seedPhrase, password }) => {
                 revealPrivateKey={revealPrivateKey}
                 setShowCheckPassword={() => setShowCheckPassword(true)}
                 setAuthAction={setAuthAction}
+                getSOLBalance={getSOLBalance}
+
               />
             ))}
 
