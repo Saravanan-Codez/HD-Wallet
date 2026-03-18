@@ -215,7 +215,13 @@ const AccordionWallet = (
                     backgroundColor: 'rgba(143, 175, 139, 0.1)',
                   },
                 }}
-                onClick={() => setRevealSendCard(!revealSendCard)}
+                // onClick={() => setRevealSendCard(!revealSendCard)}
+                onClick={() => {
+                  setAuthAction(() => () => {
+                    setRevealSendCard(prev => !prev);
+                  });
+                  setShowCheckPassword(true);
+                }}
               >
                 { revealSendCard ? "Cancel" : "Send"}
               </Button>

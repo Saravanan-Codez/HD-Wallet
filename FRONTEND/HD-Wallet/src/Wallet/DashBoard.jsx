@@ -82,7 +82,7 @@ const DashBoard = ({ seedPhrase, password }) => {
           {/* Right side */}
           <div>
             <span className="text-xs text-ink bg-moss px-3 py-1 rounded-full">
-              Running in DEVNET
+              Running on DEVNET
             </span>
           </div>
 
