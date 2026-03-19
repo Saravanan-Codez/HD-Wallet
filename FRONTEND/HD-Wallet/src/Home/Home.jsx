@@ -26,7 +26,7 @@ const Home = () => {
 
   // Handle Main App States
   return (
-    <div className="min-h-screen bg-ink flex items-center justify-center p-4 selection:bg-moss/20">
+    <div className="min-h-screen bg-neutral-950 text-white font-sans selection:bg-neutral-800">
       <AnimatedCard>
         {appState === 'NO_WALLET' && (
           <DefaultPage 

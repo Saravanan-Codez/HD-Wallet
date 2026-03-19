@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+* {
+  font-family: Space Grotesk, Lato, sans-serif;
+}
+
 @theme {
   --color-ink: #0a0a0a;
   --color-moss-dark: #121212;
