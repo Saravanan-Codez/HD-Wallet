@@ -50,17 +50,19 @@ const AccordionWallet = (
         square
         elevation={0}
         sx={{
-          border: '1px solid rgba(167, 173, 164, 0.2)',
-          borderRadius: '0.75rem',
+          border: '2px solid #27272a',
+          borderRadius: '1.5rem',
           overflow: 'hidden',
-          backgroundColor: 'transparent',
-          color: '#F3F1EA',
-          transition: 'border-color 200ms ease, background-color 200ms ease',
+          backgroundColor: '#161616',
+          color: '#F7F7F7',
+          transition: 'all 200ms ease',
+          boxShadow: '0 6px 0 0 #C4FF00',
+          marginBottom: '16px',
           '&:before': { display: 'none' },
 
           '& .MuiAccordionSummary-root': {
             minHeight: 72,
-            padding: '0 16px',
+            padding: '0 24px',
           },
 
           '& .MuiAccordionSummary-content': {
@@ -68,13 +70,13 @@ const AccordionWallet = (
           },
 
           '& .MuiAccordionDetails-root': {
-            padding: '5px 10px',
+            padding: '10px 24px',
           },
 
           '&.Mui-expanded': {
-            margin: 0,
-            backgroundColor: '#1A221D',
-            borderColor: 'rgba(167, 173, 164, 0.5)',
+            margin: '0 0 16px 0',
+            backgroundColor: '#161616',
+            borderColor: '#C4FF00', /* Highlight border when expanded */
           },
         }}
 
@@ -205,14 +207,16 @@ const AccordionWallet = (
               <Button
                 variant="outlined"
                 sx={{
-                  borderColor: '#8FAF8B',
-                  color: '#8FAF8B',
+                  borderColor: '#C4FF00',
+                  color: '#C4FF00',
+                  borderRadius: '9999px',
                   textTransform: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
+                  padding: '6px 20px',
                   transition: 'all 0.2s',
                   '&:hover': {
-                    borderColor: '#C8D8C1',
-                    backgroundColor: 'rgba(143, 175, 139, 0.1)',
+                    borderColor: '#D4FF55',
+                    backgroundColor: 'rgba(196, 255, 0, 0.1)',
                   },
                 }}
                 // onClick={() => setRevealSendCard(!revealSendCard)}
@@ -229,15 +233,17 @@ const AccordionWallet = (
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: '#8FAF8B',
-                  color: '#101512',
+                  backgroundColor: '#C4FF00',
+                  color: '#161616',
+                  borderRadius: '9999px',
                   textTransform: 'none',
-                  fontWeight: 500,
+                  fontWeight: 600,
+                  padding: '6px 20px',
                   boxShadow: 'none',
                   transition: 'all 0.2s',
                   '&:hover': {
-                    backgroundColor: '#C8D8C1',
-                    boxShadow: 'none',
+                    backgroundColor: '#D4FF55',
+                    boxShadow: '0 0 10px rgba(196, 255, 0, 0.3)',
                   },
                 }}
               >

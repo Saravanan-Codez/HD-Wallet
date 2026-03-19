@@ -5,15 +5,20 @@ import nacl from "tweetnacl";
 import bs58 from "bs58";
 
 
-function generateSeedPhrase(setSeedPhrase, setSeed) {
+function generateSeedPhrase(setSeedPhrase) {
   const newSeedPhrase = generateMnemonic(128);
   setSeedPhrase(newSeedPhrase);
-  seedFromMnemonic(newSeedPhrase, setSeed);
 }
 
-function seedFromMnemonic(mnemonic, setSeed) {
-  const seed = mnemonicToSeedSync(mnemonic);
-  setSeed(seed);
+function validateSeedPhrase(seedPhrase, setSeedPhrase, setDashBoard, onPopClose, setError) {
+  if (validateMnemonic(seedPhrase)) {
+    setSeedPhrase(seedPhrase);
+    setDashBoard(true);
+    onPopClose();
+  } else {
+    console.error("Invalid seed phrase, please check and try again.");
+    setError(true);
+  }
 }
 
 function generateWalletFromMnemonic(mnemonic, index) {
@@ -59,6 +64,6 @@ function generateWalletFromMnemonic(mnemonic, index) {
 }
 export { 
   generateSeedPhrase, 
-  seedFromMnemonic, 
+  validateSeedPhrase,
   generateWalletFromMnemonic 
 };

@@ -1,91 +1,83 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const PasswordCheck = (
-  { 
-    password, 
-    onSuccess,
-    onClose
-  }) => {
-
+const PasswordCheck = ({ password, onSuccess, onClose }) => {
   const [passwordInput, setPasswordInput] = useState('');
   const [error, setError] = useState(false);
 
   const authenticate = () => {
     if (passwordInput === password) {
-      console.log('Authenticated'); 
       onSuccess();
-    } else if (passwordInput === '') {
-      console.log('Password cannot be empty');
+    } else {
       setError(true);
     }
-    else {
-      console.log('Authentication failed => ', passwordInput, password);
-      setError(true);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      authenticate();
     }
-  }
+  };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-[60]">
+      {/* Background blur */}
+      <div 
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+        onClick={onClose} 
+      />
 
-      <div className="w-full max-w-sm bg-moss-dark border border-muted/20 rounded-2xl shadow-xl p-6">
-
-        {/* <!-- Title --> */}
-        <h2 className="text-xl font-semibold text-bone mb-2">
-          Confirm Password
+      {/* Modal */}
+      <div className="relative z-10 w-full max-w-sm bg-neutral-900/50 backdrop-blur-xl border border-neutral-800 rounded-[2rem] shadow-2xl p-8">
+        
+        {/* Title */}
+        <h2 className="text-xl font-light text-white mb-2">
+          Verify Ownership
         </h2>
-        <p className="text-sm text-muted mb-5">
-          Enter your password to continue
+        <p className="text-sm text-neutral-400 mb-6">
+          Enter your wallet password to continue.
         </p>
 
-        {/* <!-- Password Field --> */}
-        <div className="mb-5">
+        {/* Input */}
+        <div className="relative mb-6">
           <input 
             type="password"
-            placeholder="Enter password"
-            className="w-full px-4 py-2 rounded-lg bg-ink text-bone border border-muted/30 focus:outline-none focus:ring-2 focus:ring-moss focus:border-moss transition-all placeholder:text-muted/50"
+            placeholder="Wallet password"
+            className={`w-full px-4 py-3 rounded-xl bg-neutral-800/50 text-white border text-sm focus:outline-none focus:ring-1 transition-all placeholder:text-neutral-600 ${
+              error ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500' : 'border-neutral-700/50 focus:border-neutral-500 focus:ring-neutral-500'
+            }`}
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             onFocus={() => setError(false)}
+            onKeyDown={handleKeyDown}
+            autoFocus
           />
+          {error && (
+            <div className="absolute -bottom-5 left-1 text-[11px] text-red-400 font-medium">
+              Incorrect password
+            </div>
+          )}
         </div>
-        {/* <!-- Warnings --> */}
-        { 
-          error && passwordInput !== '' && (
-            <p className="text-sm text-danger mb-5">
-              Incorrect password. Please try again.
-            </p>
-        )}
 
-        {
-          error && passwordInput === '' && (
-            <p className="text-sm text-danger mb-5">
-              Password cannot be empty.
-            </p>
-          )
-        }
-
-        {/* <!-- Buttons --> */}
-        <div className="flex justify-end gap-3">
+        {/* Buttons */}
+        <div className="flex justify-end gap-3 pt-2">
           <button 
-            className="px-4 py-2 rounded-lg bg-ink text-bone border border-muted/30 hover:bg-muted/20 transition-all font-medium"
+            className="px-5 py-2.5 rounded-full text-sm font-medium text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
             onClick={onClose}
           >
             Cancel
           </button>
 
           <button 
-            className="px-4 py-2 rounded-lg bg-moss text-ink hover:bg-moss-light transition-all active:scale-95 font-medium"
+            className="px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:scale-[1.02] hover:shadow-lg transition-all active:scale-95"
             onClick={authenticate}
           >
-            Confirm
+            Authenticate
           </button>
         </div>
 
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default PasswordCheck
+export default PasswordCheck;

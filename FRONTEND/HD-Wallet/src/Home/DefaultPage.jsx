@@ -1,78 +1,57 @@
-import React from 'react'
-import SeedPhrasePopUp from '../Seed phrase/SeedPhrasePopUp'
+import React, { useState } from 'react';
 
-const DefaultPage = ({ 
-  onPopOpen, 
-  newSeedPhrase, 
-  seedPhrasePop,
-  setSeedPhrase,
-  makeDots,
-  onPopClose,
-  seedPhrase,
-  setDashBoard
-}) => {
+const DefaultPage = ({ onImport, onGenerate }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = async () => {
+    setLoading(true);
+    // Simulate slight delay for premium feel and state processing
+    setTimeout(async () => {
+      await onGenerate();
+      setLoading(false);
+    }, 400); 
+  };
+
   return (
-    <>
-      {/* APP SHELL */}
-      <div className="fixed inset-0 bg-ink flex items-center justify-center">
-
-        {/* CARD */}
-        <div className="w-full max-w-sm bg-moss-dark rounded-2xl border border-muted/20 shadow-sm p-8">
-
-          {/* HEADER */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-semibold text-bone">
-              HD Wallet
-            </h1>
-            <p className="text-sm text-muted mt-1">
-              Securely create or import a wallet to continue
-            </p>
-          </div>
-
-          {/* ACTIONS */}
-          <div className="flex flex-col gap-4">
-
-            {/* Primary */}
-            <button
-              onClick={() => {
-                newSeedPhrase();
-                setDashBoard(true);
-              }}
-              className="w-full py-3 rounded-lg bg-moss text-ink font-medium hover:bg-moss-light transition-all active:scale-95"
-            >
-              Generate New Wallet
-            </button>
-
-            {/* Secondary */}
-            <button
-              onClick={onPopOpen}
-              className="w-full py-3 rounded-lg border border-moss text-moss hover:bg-moss/10 transition-all active:scale-95"
-            >
-              Import Existing Wallet
-            </button>
-          </div>
-
-          {/* FOOTER NOTE */}
-          <p className="text-xs text-muted text-center mt-6">
-            Your keys are generated and stored locally.
-          </p>
-
+    <div className="w-full max-w-sm bg-neutral-900/50 backdrop-blur-xl rounded-4xl border border-neutral-800 p-8 shadow-2xl">
+      <div className="text-center mb-8">
+        <div className="w-16 h-16 mx-auto bg-neutral-800 rounded-full flex items-center justify-center mb-6 shadow-inner">
+          <svg className="w-8 h-8 text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
         </div>
+        <h1 className="text-2xl font-light tracking-tight text-white mb-2">
+          HD Wallet
+        </h1>
+        <p className="text-sm text-neutral-400">
+          A secure, minimal crypto wallet manager
+        </p>
       </div>
 
-      {/* MODAL */}
-      {seedPhrasePop && (
-        <SeedPhrasePopUp
-          setSeedPhrase={setSeedPhrase}
-          makeDots={makeDots}
-          onPopClose={onPopClose}
-          seedPhrase={seedPhrase}
-          setDashBoard={setDashBoard}
-          newSeedPhrase={newSeedPhrase}
-        />
-      )}
-    </>
-  )
-}
+      <div className="flex flex-col gap-3">
+        <button
+          onClick={handleGenerate}
+          disabled={loading}
+          className={`w-full py-3.5 rounded-full bg-white text-black font-medium transition-all duration-200 
+            ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02] hover:shadow-lg active:scale-95'}`}
+        >
+          {loading ? 'Generating...' : 'Create New Wallet'}
+        </button>
 
-export default DefaultPage
+        <button
+          onClick={onImport}
+          disabled={loading}
+          className="w-full py-3.5 rounded-full bg-neutral-800 text-white font-medium hover:bg-neutral-700 transition-all duration-200 active:scale-95"
+        >
+          Import Existing
+        </button>
+      </div>
+
+      <p className="text-xs text-neutral-600 text-center mt-8">
+        Keys never leave your device
+      </p>
+    </div>
+  );
+};
+
+export default DefaultPage;
