@@ -26,8 +26,19 @@ const Home = () => {
 
   // Handle Main App States
   return (
-    <div className="min-h-screen bg-neutral-950 text-white font-sans selection:bg-neutral-800">
-      <AnimatedCard>
+    <div className="min-h-screen bg-ink text-white font-sans selection:bg-moss/25 relative overflow-hidden">
+      {/* Global roaming cloudy orb (visual only) */}
+      <div
+        aria-hidden="true"
+        className="cloudy-orb pointer-events-none absolute inset-0 z-0"
+      />
+      <div
+        aria-hidden="true"
+        className="cloudy-shadow pointer-events-none absolute inset-0 z-0"
+      />
+
+      <div className="relative z-10">
+        <AnimatedCard>
         {appState === 'NO_WALLET' && (
           <DefaultPage 
             onImport={() => setAppState('IMPORT')}
@@ -64,7 +75,8 @@ const Home = () => {
             }}
           />
         )}
-      </AnimatedCard>
+        </AnimatedCard>
+      </div>
     </div>
   );
 }

@@ -31,3 +31,113 @@
 html {
   overflow-y: scroll;
 }
+
+/* ------------------------------
+   Cloudy roaming background orb
+   ------------------------------ */
+@keyframes cloudyRoam {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(58vw, -6vh) scale(1.08);
+  }
+  50% {
+    transform: translate(22vw, 30vh) scale(1.04);
+  }
+  75% {
+    transform: translate(-22vw, 22vh) scale(1.10);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes cloudyShadowRoam {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(52vw, 10vh) scale(1.02);
+  }
+  50% {
+    transform: translate(18vw, 45vh) scale(0.98);
+  }
+  75% {
+    transform: translate(-26vw, 34vh) scale(1.05);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.cloudy-orb {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cloudy-orb::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 760px;
+  height: 760px;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(59, 130, 246, 0.22), rgba(59, 130, 246, 0.10) 38%, transparent 72%),
+    radial-gradient(circle at 70% 65%, rgba(147, 197, 253, 0.12), transparent 60%);
+  filter: blur(80px) saturate(1.05);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  animation: cloudyRoam 26s ease-in-out infinite;
+}
+
+.cloudy-orb::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -5%;
+  width: 640px;
+  height: 640px;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 40% 30%, rgba(59, 130, 246, 0.16), transparent 66%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 8px);
+  filter: blur(90px);
+  opacity: 0.20;
+  mix-blend-mode: overlay;
+  animation: cloudyRoam 32s ease-in-out infinite reverse;
+}
+
+.cloudy-shadow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cloudy-shadow::before {
+  content: "";
+  position: absolute;
+  bottom: -10%;
+  left: 0%;
+  width: 900px;
+  height: 320px;
+  border-radius: 9999px;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), rgba(59, 130, 246, 0.10) 45%, transparent 70%);
+  filter: blur(56px);
+  opacity: 0.24;
+  mix-blend-mode: multiply;
+  animation: cloudyShadowRoam 26s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloudy-orb::before,
+  .cloudy-orb::after,
+  .cloudy-shadow::before {
+    animation: none;
+  }
+}
