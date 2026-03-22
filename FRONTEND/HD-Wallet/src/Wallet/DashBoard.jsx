@@ -21,6 +21,8 @@ const DashBoard = ({ seedPhrase, password, onLogout }) => {
 
   const [wallets, setWallets] = useState([]);
 
+  const [copy, setCopy] = useState(false);
+
   const wallet0 = useMemo(() => {
     if (!seedPhrase) return null;
     
@@ -98,6 +100,12 @@ const DashBoard = ({ seedPhrase, password, onLogout }) => {
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
     // Ideally use a lightweight toast here.
+
+    setCopy(true);
+    setTimeout(() => {
+      setCopy(false);
+    }, 2 * 1000);
+
   };
 
   if (!wallet0) return null; // Logic guard
@@ -113,14 +121,14 @@ const DashBoard = ({ seedPhrase, password, onLogout }) => {
           rounded-4xl
 
           bg-neutral-900/60 backdrop-blur-xl
-          border border-white/[0.08]
+          border border-white/8
 
           shadow-[0_10px_40px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.06)]">
 
           {/* Left */}
           <div className="flex items-center gap-3">
-            <h1 className="text-sm font-medium tracking-tight text-white">
-              HD Wallet
+            <h1 className="text-sm font-medium tracking-tight text-white uppercase">
+              HD-Wallet
             </h1>
           </div>
 
@@ -161,7 +169,7 @@ pt-28 pb-8 md:pb-12">
             
             {/* Balance Hero Card */}
             <div className="group bg-neutral-900/20 border border-neutral-800 rounded-[2.5rem]
-            w-full max-w-[440px] mx-auto
+            w-full max-w-110 mx-auto
             px-6 md:px-8 py-10
             relative overflow-hidden flex flex-col justify-between
             transition-all duration-300 hover:border-neutral-600
@@ -229,7 +237,9 @@ pt-28 pb-8 md:pb-12">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between p-4 bg-neutral-900/50 border border-neutral-800 rounded-2xl hover:bg-neutral-800 cursor-pointer transition-colors">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-neutral-800 flex items-center justify-center font-bold text-lg text-white">S</div>
+                    <div className="w-12 h-12 rounded-xl bg-neutral-800 flex items-center justify-center font-bold text-lg text-white">
+                      <img src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png" alt="SOL" />
+                    </div>
                     <div>
                       <p className="font-medium text-white text-lg">Solana</p>
                       <p className="text-sm text-neutral-400">SOL</p>
@@ -267,7 +277,7 @@ pt-28 pb-8 md:pb-12">
                      className="p-2 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded-lg transition-colors shrink-0"
                    >
                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={copy ? "M5 13l4 4L19 7" : "M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"} />
                      </svg>
                    </button>
                  </div>

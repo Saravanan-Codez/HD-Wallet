@@ -19,7 +19,7 @@ const DefaultPage = ({ onImport, onGenerate }) => {
     rounded-3xl overflow-hidden
 
     bg-neutral-900/40 backdrop-blur-xl
-    border border-white/[0.08]
+    border border-white/8
 
     shadow-[0_20px_60px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.06)]">
 
@@ -31,7 +31,7 @@ const DefaultPage = ({ onImport, onGenerate }) => {
       </h1>
 
       {/* Subtitle */}
-      <p className="text-xs text-neutral-400 mb-8 leading-relaxed max-w-[240px]">
+      <p className="text-xs text-neutral-400 mb-8 leading-relaxed max-w-60">
         Create or import your wallet securely
       </p>
 
@@ -53,9 +53,9 @@ const DefaultPage = ({ onImport, onGenerate }) => {
         </button>
 
         <div className="relative flex items-center py-2 w-[80%]">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-neutral-700/80 to-transparent" />
+          <div className="flex-1 h-px bg-linear-to-r from-transparent via-neutral-700/80 to-transparent" />
           <span className="mx-3 text-[10px] text-neutral-500 tracking-[0.25em]">OR</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-neutral-700/80 to-transparent" />
+          <div className="flex-1 h-px bg-linear-to-r from-transparent via-neutral-700/80 to-transparent" />
         </div>
 
         <button
