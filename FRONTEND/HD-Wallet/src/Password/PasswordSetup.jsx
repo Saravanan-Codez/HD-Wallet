@@ -7,8 +7,12 @@ const PasswordSetup = ({ setPassword }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-ink">
-      <div className="w-full max-w-sm bg-moss-dark border border-muted/20 p-6 rounded-2xl shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-ink relative overflow-hidden">
+      {/* Cloudy roaming background orb */}
+      <div aria-hidden="true" className="cloudy-orb pointer-events-none absolute inset-0 z-0" />
+      <div aria-hidden="true" className="cloudy-shadow pointer-events-none absolute inset-0 z-0" />
+
+      <div className="relative z-10 w-full max-w-sm bg-moss-dark border border-muted/20 p-6 rounded-2xl shadow-lg">
 
         <h2 className="text-2xl font-semibold text-bone mb-2 text-center">
           Create Password
